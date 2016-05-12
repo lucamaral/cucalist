@@ -1,10 +1,14 @@
 (function() {
 
     App.Cucas.Service = {
-        list: function() {
+        list: function(searchTerm) {
+            var url = '/api/cucas';
+            if(searchTerm != null){
+              url += "?searchTerm=" + searchTerm;
+            }
             return $.ajax({
                 type: 'GET',
-                url: '/api/cucas',
+                url: url,
                 dataType: 'json'
             });
         },

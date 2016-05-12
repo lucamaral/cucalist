@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index()
 
 # APIS
-GET		 /api/cucas					         	apis.CucaAPI.list()
+GET		 /api/cucas					         	apis.CucaAPI.list(searchTerm: String ?= null)
 POST	 /api/cucas					         	apis.CucaAPI.save()
 
 # Map static resources from the /public folder to the /assets URL path

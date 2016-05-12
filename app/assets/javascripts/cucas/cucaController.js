@@ -3,21 +3,28 @@
         iniciar: function() {
             App.Cucas.Controller.renderizar();
             App.Cucas.View.bindNovaCuca(App.Cucas.Controller.novaCuca);
+            App.Cucas.View.bindPesquisaCuca(App.Cucas.Controller.pesquisar);
         },
-        renderizar: function() {
-            var cucasPromise = App.Cucas.Service.list();
+        renderizar: function(searchTerm) {
+            var cucasPromise = App.Cucas.Service.list(searchTerm);
             cucasPromise.then(App.Cucas.Controller.renderizarCucas);
         },
         renderizarCucas: function(cucas) {
             App.Cucas.View.limparLista();
-            for (var i = 0; i < cucas.length; i++) {
-                var cuca = cucas[i];
-                App.Cucas.View.renderizarItem(cuca);
-            }
+            var cucasInput = {
+              "cucas": cucas
+            };
+            App.Cucas.View.renderizarItems(cucasInput);
         },
         novaCuca: function(novaCuca) {
             var novaCucaPromise = App.Cucas.Service.nova(novaCuca);
-            novaCucaPromise.then(App.Cucas.Controller.renderizar);
+            novaCucaPromise.then(function () {
+                App.Cucas.Controller.renderizar();
+            });
+        },
+        pesquisar: function(searchTerm){
+            console.info(searchTerm);
+            App.Cucas.Controller.renderizar(searchTerm);
         }
     };
 

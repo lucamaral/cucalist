@@ -36,7 +36,8 @@
             <h1>Cucas</h1>
           </header>
           <section id="cucas-search-section">
-            <input type="text" name="cucas-search-input" placeholder="Procurar Cucas" class="form-control">
+            <input type="text" id="cucas-search-input" placeholder="Procurar Cucas" class="form-control">
+            <button id="cuca-search-button">Pesquisar</button>
           </section>
           <hr />
           <section id="cucas-list-section">
@@ -48,10 +49,11 @@
   </div>
   <!-- Templates -->
   <script id="cucas-list-item-template" type="x-tmpl-mustache">
+    {{#cucas}}
     <li class="list-group-item clearfix">
       <div class="row">
         <div class="col-md-11">
-          {{tipo}} - {{origem}}
+        {{tipo}} - {{origem}}
         </div>
         <div class="col-md-1">
           <button class="btn btn-success btn-block"> Editar </button>
@@ -59,6 +61,7 @@
         </div>
       </div>
     </li>
+    {{/cucas}}
   </script>
 
   <!--  Dependencias -->

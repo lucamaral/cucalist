@@ -3,8 +3,8 @@
         limparLista: function() {
             $('#cucas-list').empty();
         },
-        renderizarItem: function(cuca) {
-            var rendered = Mustache.render(App.Cucas.Templates.ListItemTemplate, cuca);
+        renderizarItems: function(cucasInput) {
+            var rendered = Mustache.render(App.Cucas.Templates.ListItemTemplate, cucasInput);
             $('#cucas-list').append(rendered);
         },
         bindNovaCuca: function(novaCucaCallback) {
@@ -21,6 +21,14 @@
 
                 novaCucaCallback(cuca);
             });
+        },
+        bindPesquisaCuca: function(pesquisaCallback){
+          $("#cuca-search-button").click(function(){
+
+            var searchTerm = $("#cucas-search-input").val();
+
+            pesquisaCallback(searchTerm);
+          })
         }
     };
 })();

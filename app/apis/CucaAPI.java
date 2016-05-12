@@ -12,16 +12,26 @@ import play.mvc.Result;
 
 public class CucaAPI extends Controller {
 
-    private final static List<Cuca> cucas = new ArrayList<>();
+	private final static List<Cuca> cucas = new ArrayList<>();
 
-    public static Result list() {
-        return ok(Json.toJson(cucas));
-    }
+	public static Result list(String searchTerm) {
+		System.out.println(searchTerm);
+		if (searchTerm != null) {
+			List<Cuca> cucasFiltradas = new ArrayList<>();
+			for (Cuca cuca : cucas) {
+				if (cuca.getOrigem().contains(searchTerm) || cuca.getTipo().contains(searchTerm)) {
+					cucasFiltradas.add(cuca);	
+				}
+			}
+			return ok(Json.toJson(cucasFiltradas));
+		}
+		return ok(Json.toJson(cucas));
+	}
 
-    public static Result save() throws Exception {
-        final Cuca cuca = new ObjectMapper().readValue(request().body().asJson().traverse(), Cuca.class);
-        cucas.add(cuca);
-        return ok(Json.toJson(true));
-    }
+	public static Result save() throws Exception {
+		final Cuca cuca = new ObjectMapper().readValue(request().body().asJson().traverse(), Cuca.class);
+		cucas.add(cuca);
+		return ok(Json.toJson(true));
+	}
 
 }
