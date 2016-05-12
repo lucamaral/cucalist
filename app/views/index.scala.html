@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>Cuca List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+  <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")">
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <section id="cucas-nova-section">
+            <header class="page-header">
+              <h1>Nova Cuca</h1>
+            </header>
+            <form id="nova-cuca-form">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Tipo da cuca..." id="tipo-nova-cuca-input">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Padaria que faz a cuca..." id="padaria-nova-cuca-input">
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary btn-block"> Salvar nova cuca </button>
+              </div>
+            </form>
+          </section>
+        </div>
+        <div class="col-md-9">
+          <header id="cucas-header-section" class="page-header">
+            <h1>Cucas</h1>
+          </header>
+          <section id="cucas-search-section">
+            <input type="text" name="cucas-search-input" placeholder="Procurar Cucas" class="form-control">
+          </section>
+          <hr />
+          <section id="cucas-list-section">
+            <ul id="cucas-list" class="list-group"></ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Templates -->
+  <script id="cucas-list-item-template" type="x-tmpl-mustache">
+    <li class="list-group-item clearfix">
+      <div class="row">
+        <div class="col-md-11">
+          {{tipo}} - {{origem}}
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-success btn-block"> Editar </button>
+          <button class="btn btn-danger btn-block"> Remover </button>
+        </div>
+      </div>
+    </li>
+  </script>
+
+  <!--  Dependencias -->
+  <script src="@routes.Assets.at("jquery/jquery.min.js")"></script>
+  <script src="@routes.Assets.at("bootstrap/js/bootstrap.min.js")"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+
+  <!--  Fontes -->
+  <script>
+    var App = {
+      Cucas: {}
+    };
+  </script>
+  <script src="@routes.Assets.at("javascripts/cucas/cucaService.js")"></script>
+  <script src="@routes.Assets.at("javascripts/cucas/cucaTemplates.js")"></script>
+  <script src="@routes.Assets.at("javascripts/cucas/cucaView.js")"></script>
+  <script src="@routes.Assets.at("javascripts/cucas/cucaController.js")"></script>
+  <script src="@routes.Assets.at("javascripts/cucas/cucaPrincipal.js")"></script>
+</body>
+
+</html>
