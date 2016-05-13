@@ -39,7 +39,6 @@
             <input type="text" id="cucas-search-input" placeholder="Procurar Cucas" class="form-control">
             <button id="cuca-search-button">Pesquisar</button>
           </section>
-          <hr />
           <section id="cucas-list-section">
             <ul id="cucas-list" class="list-group"></ul>
           </section>
@@ -50,18 +49,51 @@
   <!-- Templates -->
   <script id="cucas-list-item-template" type="x-tmpl-mustache">
     {{#cucas}}
-    <li class="list-group-item clearfix">
+    <li class="list-group-item clearfix" data-id={{id}} data-origem={{origem}} data-tipo={{tipo}}>
       <div class="row">
-        <div class="col-md-11">
-        {{tipo}} - {{origem}}
+        <div class="col-md-10">
+        Tipo: {{tipo}}
         </div>
-        <div class="col-md-1">
-          <button class="btn btn-success btn-block"> Editar </button>
-          <button class="btn btn-danger btn-block"> Remover </button>
+        <div class="col-md-10">
+        Padaria: {{origem}}
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success btn-block cucas-button-edit"> Editar </button>
+          <button class="btn btn-danger btn-block cucas-button-remover"> Remover </button>
         </div>
       </div>
     </li>
     {{/cucas}}
+  </script>
+
+  <script id="cucas-item-template" type="x-tmpl-mustache">
+      <div class="row">
+        <div class="col-md-10">
+        Tipo: {{tipo}}
+        </div>
+        <div class="col-md-10">
+        Padaria: {{origem}}
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success btn-block cucas-button-edit"> Editar </button>
+          <button class="btn btn-danger btn-block cucas-button-remover"> Remover </button>
+        </div>
+      </div>
+  </script>
+
+  <script type="x-tmpl-mustache" id="cucas-list-item-edit-template">
+    <div class="row">
+      <div class="col-md-10">
+      Tipo: <input type="text" class="form-control tipo-cuca-input" value={{tipo}}>
+      </div>
+      <div class="col-md-10">
+      Padaria: <input type="text" class="form-control origem-cuca-input" value={{origem}}>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-success btn-block cucas-edit-salvar-button"> Salvar </button>
+        <button class="btn btn-danger btn-block cucas-edit-cancelar-button"> Cancelar </button>
+      </div>
+    </div>
   </script>
 
   <!--  Dependencias -->

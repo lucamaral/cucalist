@@ -27,10 +27,24 @@ public class CucaAPI extends Controller {
 		}
 		return ok(Json.toJson(cucas));
 	}
-
+	
+	
+	
 	public static Result save() throws Exception {
 		final Cuca cuca = new ObjectMapper().readValue(request().body().asJson().traverse(), Cuca.class);
 		cucas.add(cuca);
+		cuca.setId(cuca.getClasseID());
+		return ok(Json.toJson(true));
+	}
+	
+	public static Result remover(Long id){
+		Cuca cucaARemover = new Cuca();
+		for(Cuca cuca: cucas){
+			if(cuca.getId() == id){
+				cucaARemover = cuca;
+			}
+		}
+		cucas.remove(cucaARemover);
 		return ok(Json.toJson(true));
 	}
 
