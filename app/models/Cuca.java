@@ -1,61 +1,48 @@
 package models;
 
-//@Entity(name = "cuca")
-public class Cuca /* extends Model */ {
+public class Cuca {
+	private String tipo;
+	private String origem;
+	private long id;
 	
-	//usando essa variavel pra testar como funciona, depois implemento banco de dados
-	private static long classeID = 1;
+	public Cuca(String origem, String tipo, long id){
+		this.origem = origem;
+		this.tipo = tipo;
+		this.id = id;
+	}
 	
+	public Cuca(){
+		super();
+	}
 	
-	/*
-     * private static final long serialVersionUID = 2832319250723749667L;
-     */
-
-    /*
-     * @Id
-     * 
-     * @GeneratedValue
-     * 
-     * @Column(name = "cuca_id")
-     */
-    private Long id;
-
-    // @Column(name = "cuca_tipo")
-    private String tipo;
-
-    // @Column(name = "cuca_origem")
-    private String origem;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(final Long id) {
-        this.id = id;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(final String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getOrigem() {
-        return origem;
-    }
-
-    public void setOrigem(final String origem) {
-        this.origem = origem;
-    }
-
-    public long getClasseID(){
-    	long id = this.classeID;
-    	classeID++;
-    	return id;
-    }
-    
-    // public static Finder<Long, Cuca> find = new Finder<>(Long.class, Cuca.class);
-
+	public Cuca(String origem, String tipo){
+		this.origem = origem;
+		this.tipo = tipo;
+	}
+	
+	public String getTipo(){
+		return this.tipo;
+	}
+	
+	public String getOrigem(){
+		return this.origem;
+	}
+	
+	public long getID(){
+		return this.id;
+	}
+	
+	public void setTipo(String tipo){
+		this.tipo = tipo;
+	}
+	
+	public void setOrigem(String origem){
+		this.origem = origem;
+	}
+	
+	public void setID(long id){
+		this.id = id;
+	}
+	
 }
+
