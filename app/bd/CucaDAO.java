@@ -96,7 +96,7 @@ public class CucaDAO {
 	}
 	
 	public boolean atualizarCuca(Connection con, Cuca cuca) throws SQLException{
-		String sql = "Update cuca SET tipo = ?, origem = ? WHERE id_evento = ?;";
+		String sql = "Update cuca SET tipo = ?, origem = ? WHERE id_cuca = ?;";
 		PreparedStatement stm = con.prepareStatement(sql);
 			stm.setString(1, cuca.getTipo());
 			stm.setString(2, cuca.getOrigem());

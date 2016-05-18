@@ -35,7 +35,11 @@ public class CucaAPI extends Controller {
 		}
 	}
 	
-	
+	public static Result atualizar() throws Exception{
+		final Cuca cuca = new ObjectMapper().readValue(request().body().asJson().traverse(), Cuca.class);
+		cucaDAO.atualizarCuca(con, cuca);
+		return ok(Json.toJson(cuca));
+	}
 	
 	public static Result save() throws Exception {
 		final Cuca cuca = new ObjectMapper().readValue(request().body().asJson().traverse(), Cuca.class);

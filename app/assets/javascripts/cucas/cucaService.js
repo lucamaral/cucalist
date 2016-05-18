@@ -28,11 +28,13 @@
             });
         },
         editar: function(cucaEditada) {
-            var def = $.Deferred();
-            setTimeout(function() {
-                def.resolve(cucaEditada);
-            }, 500);
-            return def.promise();
+            return $.ajax({
+              type: 'PUT' ,
+              url: '/api/cucas' ,
+              dataType: 'json' ,
+              contentType: 'application/json' ,
+              data: JSON.stringify(cucaEditada)
+            })
         }
     };
 

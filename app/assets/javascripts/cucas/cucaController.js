@@ -36,9 +36,9 @@
         },
         atualizarCuca: function(status, cucaEditada) {
             if (status) {
-                App.Cucas.Service.editar(cucaEditada).then(function(itemEditado) {
-                  console.info(itemEditado);
-                    App.Cucas.View.renderizarItem(itemEditado);
+                App.Cucas.Service.editar(cucaEditada).then(function(cucaEditada) {
+                  console.info(cucaEditada);
+                    App.Cucas.View.renderizarItem(cucaEditada);
                     App.Cucas.View.bindEditarCuca(App.Cucas.Controller.atualizarCuca);
                     App.Cucas.View.bindRemoverCuca(App.Cucas.Controller.removerCuca);
                 });
