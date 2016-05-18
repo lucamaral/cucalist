@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import bd.ConexaoDB;
 import bd.CucaDAO;
 import models.Cuca;
 import play.db.DB;
@@ -16,7 +17,7 @@ import play.mvc.Result;
 
 public class CucaAPI extends Controller {
 	
-	private static Connection con = DB.getConnection();
+	private static Connection con = ConexaoDB.getConexaoMySQL();
 	private static CucaDAO cucaDAO = new CucaDAO();
 	
 	private final static List<Cuca> cucas = new ArrayList<>();
@@ -24,10 +25,14 @@ public class CucaAPI extends Controller {
 	public static Result list(String searchTerm) throws SQLException {
 		System.out.println(searchTerm);
 		if (searchTerm != null) {
-			List<Cuca> cucasFiltradas = cucaDAO.consultaCucaSearchTerm(con, searchTerm);
+			List<Cuca> cucasFiltradas = new ArrayList<>();
+			cucasFiltradas = cucaDAO.consultaCucaSearchTerm(con, searchTerm);
 			return ok(Json.toJson(cucasFiltradas));
+		}else{
+			List<Cuca> allCucas = new ArrayList<>();
+			allCucas = cucaDAO.consultaAllCucas(con);
+			return ok(Json.toJson(allCucas));
 		}
-		return ok(Json.toJson(cucas));
 	}
 	
 	
@@ -39,7 +44,7 @@ public class CucaAPI extends Controller {
 		return ok(Json.toJson(true));
 	}
 	
-	public static Result remover(Long id) throws SQLException{
+	public static Result remover(long id) throws SQLException{
 		Cuca cucaARemover = new Cuca();
 		for(Cuca cuca: cucas){
 			if(cuca.getID() == id){
@@ -47,6 +52,7 @@ public class CucaAPI extends Controller {
 			}
 		}
 		cucas.remove(cucaARemover);
+		cucaARemover = cucaDAO.consultaCucaID(con, id);
 		cucaDAO.removerCuca(con, cucaARemover);
 		return ok(Json.toJson(true));
 	}
