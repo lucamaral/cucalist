@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import models.Evento;
+import models.Pessoa;
 
 public class EventoDAO {
 	
@@ -34,14 +36,13 @@ public class EventoDAO {
 	}
 	
 	public boolean atualizarEvento(Connection con, Evento evento) throws SQLException{
-		String sql = "Update evento SET titulo = ?, descricao = ?, status = ?, prazo = ?, empresa_id_empresa = ? WHERE id_evento = ?;";
+		String sql = "Update evento SET titulo = ?, descricao = ?, prazo = ?, empresa_id_empresa = ? WHERE id_evento = ?;";
 		PreparedStatement stm = con.prepareStatement(sql);
 			stm.setString(1, evento.getTitulo());
 			stm.setString(2, evento.getDescricao());
-			stm.setString(3, evento.getStatus());
-			stm.setDate(4, new java.sql.Date(evento.getPrazo().getTime()));
-			stm.setInt(5, evento.getIDEmpresa());
-			stm.setInt(6, evento.getID());
+			stm.setDate(3, new java.sql.Date(evento.getPrazo().getTime()));
+			stm.setInt(4, evento.getIDEmpresa());
+			stm.setInt(5, evento.getID());
 		return stm.executeUpdate() > 0;
 	}
 	
@@ -122,30 +123,6 @@ public class EventoDAO {
 		stm.executeUpdate();
 	}
 	
-	public long diffDias(Connection con, Evento evento) throws SQLException{
-		PreparedStatement stm1 = con.prepareStatement("SELECT prazo FROM evento WHERE id_evento = ?;");
-		stm1.setInt(1, evento.getID());
-		ResultSet rs1 = stm1.executeQuery();
-		Date dataAtual = new Date();
-		if(rs1.next()){
-			Date data = rs1.getDate("prazo");
-			long diff = dataAtual.getTime() - data.getTime();
-			long diffDias = diff / (24 * 60 * 60 * 1000);
-			return diffDias;
-		}
-		return 0;
-	}
-	
-	public void definirStatus(Connection con, Evento evento) throws SQLException{
-		if(diffDias(con, evento) > 7){
-			evento.setStatus("Verde");
-		}else if(7 > diffDias(con, evento) &&  diffDias(con, evento) > 3){
-			evento.setStatus("Amarelo");
-		}else{
-			evento.setStatus("Vermelho");
-		}
-	}
-	
 	//só vem o id, usar id do parti pra consultar evento e voltar todas as informações
 	
 	public List<Evento> consultaEventoPessoa(Connection con, Pessoa pessoa) throws SQLException{
@@ -160,7 +137,33 @@ public class EventoDAO {
 		return eventos;
 	}
 	
-	public Evento consultaEvento(Connection con, int id) throws SQLException{
+	public List<Evento> getAllEventos(Connection con) throws SQLException{
+		System.out.println("cheguei no all eventos");
+		PreparedStatement stm = con.prepareStatement("SELECT * FROM evento;");
+		ResultSet rs = stm.executeQuery();
+		List<Evento> eventos = new ArrayList<>();
+		while(rs.next()){
+			Evento evento = getEvento(rs);
+			eventos.add(evento);
+			
+		}
+		return eventos;
+	}
+	
+	public List<Evento> consultaEventoSearchTerm(Connection con, String searchTerm) throws SQLException{
+		PreparedStatement stm = con.prepareStatement("SELECT * FROM evento;");
+		ResultSet rs = stm.executeQuery();
+		List<Evento> eventos = new ArrayList<>();
+		while(rs.next()){
+			Evento evento = getEvento(rs);
+			if(searchTerm.contains(evento.getTitulo())){
+				eventos.add(evento);
+			}
+		}
+		return eventos;
+	}
+	
+	public Evento consultaEventoID(Connection con, int id) throws SQLException{
 		PreparedStatement stm = con.prepareStatement("SELECT * FROM evento WHERE id_evento = ?;");
 		stm.setInt(1, id);
 		ResultSet rs = stm.executeQuery();
@@ -176,9 +179,8 @@ public class EventoDAO {
 		int id = rs.getInt("id_evento");
 		String titulo = rs.getString("titulo");
 		String descricao = rs.getString("descricao");
-		String status = rs.getString("status");
 		Date prazo = new java.util.Date(rs.getDate("prazo").getTime());
-		Evento evento = new Evento(id, titulo, descricao, prazo, status, idEmpresa);
+		Evento evento = new Evento(id, titulo, descricao, prazo, idEmpresa);
 		return evento;
 	}
 }

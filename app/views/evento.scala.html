@@ -1,0 +1,123 @@
+@(id: Long)
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")">
+  	<link rel="stylesheet" type="text/css" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")">
+  	<link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/styles.css")">
+    <title>Cuca List</title>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+  		<div class="container-fluid">
+  			<div class="navbar-header">
+  				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+  					<span class="sr-only">Toggle navigation</span>
+  					<span class="icon-bar"></span>
+  					<span class="icon-bar"></span>
+  					<span class="icon-bar"></span>
+  				</button>
+  				<a class="navbar-brand" href="#">Nome Usuario</a>
+  			</div>
+  			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  				<ul class="nav navbar-nav">
+  					<li><a href="./index.html">Home</a></li>
+  					<li class="dropdown">
+  						<a hre f="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Eventos<span class="caret"></span></a>
+  						<ul class="dropdown-menu">
+  							<li><a href="/eventos.scala.html">Todos os Eventos</a></li>
+  							<li><a href="../evento/meuseventos.html">Meus Eventos</a></li>
+  							<li role="separator" class="divider"></li>
+  							<li><a href="../evento/criarevento.html">Criar Evento</a></li>
+  						</ul>
+  					</li>
+  				</ul>
+  				<u class="nav navbar-nav">
+  					<li class="dropdown">
+  						<a hre f="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cucas<span class="caret"></span></a>
+  						<ul class="dropdown-menu">
+  							<li><a href="/cucas.scala.html">Todas as Cucas</a></li>
+  							<li role="separator" class="divider"></li>
+  							<li><a href="../cuca/criarcuca.html">Criar Cuca</a></li>
+  						</ul>
+  					</li>
+  				</u>
+  				<ul class="nav navbar-nav navbar-right">
+  					<li class="dropdown">
+  						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span class="caret"></span></a>
+  						<ul class="dropdown-menu">
+  							<li><a href="#">Minha Conta</a></li>
+  							<li><a href="#">Configurações</a></li>
+  							<li role="separator" class="divider"></li>
+  							<li><a href="#">Sair</a></li>
+  						</ul>
+  					</li>
+  				</ul>
+  			</div>
+  		</div>
+  	</nav>
+
+    <div class="evento-wrapper">
+      <div class="container-fluid">
+        <section id="evento-section">
+          <div id="evento"></div>
+        </section>
+      </div>
+      <div class="container-fluid">
+        <section id="evento-descricao-section">
+          <p id="evento-descricao"></p>
+        </section>
+      </div>
+      <div class="container-fluid">
+        <section id="evento-part-list-section">
+          <ul id="evento-part-list" class="list-group"></ul>
+        </section>
+      </div>
+      <div class="container-fluid">
+        <section id="evento-cucas-list-section">
+        </section>
+      </div>
+    </div>
+
+<script id="evento-dados-template" type="x-tmpl-mustache">
+  {{#evento}}
+    <div class="row">
+      <h3 class="col-md-12">
+      {{titulo}}
+      </h3>
+    </div>
+    <div class="row">
+      <p class="col-md-12">
+      {{descricao}}
+      </p>
+    </div>
+  {{/evento}}
+</script>
+
+<script src="@routes.Assets.at("jquery/jquery.min.js")"></script>
+<script src="@routes.Assets.at("bootstrap/js/bootstrap.min.js")"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+
+<script>
+  var App = {
+    Evento: {}
+  };
+</script>
+
+    <script src="@routes.Assets.at("javascripts/evento/eventoService.js")"></script>
+    <script src="@routes.Assets.at("javascripts/evento/eventoTemplates.js")"></script>
+    <script src="@routes.Assets.at("javascripts/evento/eventoView.js")"></script>
+    <script src="@routes.Assets.at("javascripts/evento/eventoController.js")"></script>
+    <script src="@routes.Assets.at("javascripts/evento/eventoPrincipal.js")"></script>
+    <script>
+      App.Evento.Principal.iniciar(@id);
+    </script>
+
+  </body>
+</html>

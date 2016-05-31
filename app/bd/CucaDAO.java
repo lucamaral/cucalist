@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import models.Evento;
 import models.Cuca;
 
 public class CucaDAO {
@@ -28,8 +28,6 @@ public class CucaDAO {
 	}
 	
 	public List<Cuca> consultaCucaSearchTerm(Connection con, String searchTerm) throws SQLException{
-		PreparedStatement stm1 = con.prepareStatement("SELECT CONCAT(tipo, ' ', origem) FROM cuca;");
-		ResultSet rs1 = stm1.executeQuery();
 		PreparedStatement stm2 = con.prepareStatement("SELECT * FROM cuca;");
 		List<Cuca> cucas = new ArrayList<>();
 		ResultSet rs2 = stm2.executeQuery();

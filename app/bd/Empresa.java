@@ -2,6 +2,8 @@ package bd;
 
 import java.util.List;
 
+import models.Pessoa;
+
 public class Empresa {
 
 	private String nome;

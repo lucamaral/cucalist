@@ -1,0 +1,64 @@
+@main("Cuca List") {
+
+    <div id="eventos-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4">
+            <section id="eventos-menu-section">
+              <input type="text" id="eventos-search-input" placeholder="Procurar Eventos" class="form-control">
+              <button id="evento-search-button">Pesquisar</button>
+              <button  class="btn btn-success btn-block evento-button-new">Criar Evento</button>
+            </section>
+          </div>
+          <div class="col-md-8">
+            <header id="eventos-header-section" class="page-header">
+              <h1>Eventos</h1>
+            </header>
+            <section id="eventos-list-section">
+              <ul id="eventos-list" class="list-group"></ul>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script id="evento-list-template" type="x-tmpl-mustache">
+      {{#eventos}}
+      <li class="list-group-item clearfix" data-id={{id}} data-titulo={{titulo}}>
+        <div class="row">
+          <div class="col-md-10">
+          Titulo: {{titulo}}
+          </div>
+          <div class="col-md-2">
+            <a class="btn btn-success btn-block eventos-button-more" href="/eventos/{{id}}"> Detalhes </a>
+            <button class="btn btn-danger btn-block eventos-button-remover"> Remover </button>
+          </div>
+        </div>
+      </li>
+      {{/eventos}}
+    </script>
+
+    <script id="evento-item-template" type="x-tmpl-mustache">
+        <div class="row">
+          <div class="col-md-10">
+          Titutlo: {{titulo}}
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-success btn-block eventos-button-more"> Detalhes </button>
+            <button class="btn btn-danger btn-block eventos-button-remover"> Remover </button>
+          </div>
+        </div>
+    </script>
+
+    <script>
+      var App = {
+        Eventos: {}
+      };
+    </script>
+
+    <script src="@routes.Assets.at("javascripts/eventos/eventosService.js")"></script>
+    <script src="@routes.Assets.at("javascripts/eventos/eventosTemplates.js")"></script>
+    <script src="@routes.Assets.at("javascripts/eventos/eventosView.js")"></script>
+    <script src="@routes.Assets.at("javascripts/eventos/eventosController.js")"></script>
+    <script src="@routes.Assets.at("javascripts/eventos/eventosPrincipal.js")"></script>
+}

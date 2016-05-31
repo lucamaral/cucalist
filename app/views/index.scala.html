@@ -1,117 +1,20 @@
-<!DOCTYPE html>
-
-<html>
-
-<head>
-  <title>Cuca List</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-  <link rel="stylesheet" href="@routes.Assets.at("bootstrap/css/bootstrap.min.css")">
-</head>
-
-<body>
-  <div id="wrapper">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-3">
-          <section id="cucas-nova-section">
-            <header class="page-header">
-              <h1>Nova Cuca</h1>
-            </header>
-            <form id="nova-cuca-form">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Tipo da cuca..." id="tipo-nova-cuca-input">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Padaria que faz a cuca..." id="padaria-nova-cuca-input">
-              </div>
-              <div class="form-group">
-                <button class="btn btn-primary btn-block"> Salvar nova cuca </button>
-              </div>
-            </form>
-          </section>
-        </div>
-        <div class="col-md-9">
-          <header id="cucas-header-section" class="page-header">
-            <h1>Cucas</h1>
-          </header>
-          <section id="cucas-search-section">
-            <input type="text" id="cucas-search-input" placeholder="Procurar Cucas" class="form-control">
-            <button id="cuca-search-button">Pesquisar</button>
-          </section>
-          <section id="cucas-list-section">
-            <ul id="cucas-list" class="list-group"></ul>
-          </section>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Templates -->
-  <script id="cucas-list-item-template" type="x-tmpl-mustache">
-    {{#cucas}}
-    <li class="list-group-item clearfix" data-id={{id}} data-origem={{origem}} data-tipo={{tipo}}>
-      <div class="row">
-        <div class="col-md-10">
-        Tipo: {{tipo}}
-        </div>
-        <div class="col-md-10">
-        Padaria: {{origem}}
-        </div>
-        <div class="col-md-2">
-          <button class="btn btn-success btn-block cucas-button-edit"> Editar </button>
-          <button class="btn btn-danger btn-block cucas-button-remover"> Remover </button>
-        </div>
-      </div>
-    </li>
-    {{/cucas}}
-  </script>
-
-  <script id="cucas-item-template" type="x-tmpl-mustache">
-      <div class="row">
-        <div class="col-md-10">
-        Tipo: {{tipo}}
-        </div>
-        <div class="col-md-10">
-        Padaria: {{origem}}
-        </div>
-        <div class="col-md-2">
-          <button class="btn btn-success btn-block cucas-button-edit"> Editar </button>
-          <button class="btn btn-danger btn-block cucas-button-remover"> Remover </button>
-        </div>
-      </div>
-  </script>
-
-  <script type="x-tmpl-mustache" id="cucas-list-item-edit-template">
-    <div class="row">
-      <div class="col-md-10">
-      Tipo: <input type="text" class="form-control tipo-cuca-input" value={{tipo}}>
-      </div>
-      <div class="col-md-10">
-      Padaria: <input type="text" class="form-control origem-cuca-input" value={{origem}}>
-      </div>
-      <div class="col-md-2">
-        <button class="btn btn-success btn-block cucas-edit-salvar-button"> Salvar </button>
-        <button class="btn btn-danger btn-block cucas-edit-cancelar-button"> Cancelar </button>
-      </div>
-    </div>
-  </script>
-
-  <!--  Dependencias -->
-  <script src="@routes.Assets.at("jquery/jquery.min.js")"></script>
-  <script src="@routes.Assets.at("bootstrap/js/bootstrap.min.js")"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
-
-  <!--  Fontes -->
-  <script>
-    var App = {
-      Cucas: {}
-    };
-  </script>
-  <script src="@routes.Assets.at("javascripts/cucas/cucaService.js")"></script>
-  <script src="@routes.Assets.at("javascripts/cucas/cucaTemplates.js")"></script>
-  <script src="@routes.Assets.at("javascripts/cucas/cucaView.js")"></script>
-  <script src="@routes.Assets.at("javascripts/cucas/cucaController.js")"></script>
-  <script src="@routes.Assets.at("javascripts/cucas/cucaPrincipal.js")"></script>
-</body>
-
-</html>
+@main("Cuca List"){
+	<div class="container-fluid">
+		<div class="alert alert-success alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Seu evento foi pago com sucesso
+		</div>
+		<div class="alert alert-info alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Um novo evento foi criado.<a href="#" class="alert-link">Veja aqui.</a>
+		</div>
+		<div class="alert alert-warning alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			Um evento que você participa está perto de acabar e você não pagou todas as suas cucas.<a href="#" class="alert-link"><strong>Veja aqui.</strong></a>
+		</div>
+		<div class="alert alert-danger alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<strong>Um evento que você participava acabou e você não pagou todas as suas cucas!</strong>
+		</div>
+	</div>
+}

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import models.Evento;
+import models.Pessoa;
 
 public class PessoaDAO {
 

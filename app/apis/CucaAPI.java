@@ -19,11 +19,8 @@ public class CucaAPI extends Controller {
 	
 	private static Connection con = ConexaoDB.getConexaoMySQL();
 	private static CucaDAO cucaDAO = new CucaDAO();
-	
-	private final static List<Cuca> cucas = new ArrayList<>();
 
 	public static Result list(String searchTerm) throws SQLException {
-		System.out.println(searchTerm);
 		if (searchTerm != null) {
 			List<Cuca> cucasFiltradas = new ArrayList<>();
 			cucasFiltradas = cucaDAO.consultaCucaSearchTerm(con, searchTerm);
@@ -43,19 +40,12 @@ public class CucaAPI extends Controller {
 	
 	public static Result save() throws Exception {
 		final Cuca cuca = new ObjectMapper().readValue(request().body().asJson().traverse(), Cuca.class);
-		cucas.add(cuca);
 		cucaDAO.inserirCuca(con, cuca);
 		return ok(Json.toJson(true));
 	}
 	
 	public static Result remover(long id) throws SQLException{
 		Cuca cucaARemover = new Cuca();
-		for(Cuca cuca: cucas){
-			if(cuca.getID() == id){
-				cucaARemover = cuca;
-			}
-		}
-		cucas.remove(cucaARemover);
 		cucaARemover = cucaDAO.consultaCucaID(con, id);
 		cucaDAO.removerCuca(con, cucaARemover);
 		return ok(Json.toJson(true));
