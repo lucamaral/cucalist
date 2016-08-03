@@ -20,8 +20,11 @@
         },
         novaCuca: function(novaCuca) {
             var novaCucaPromise = App.Cucas.Service.nova(novaCuca);
-            novaCucaPromise.then(function() {
-                App.Cucas.Controller.renderizar();
+            novaCucaPromise.then( function(novaCuca) {
+              App.Cucas.Controller.renderizar();
+            }, function(novaCuca) {
+              console.info(novaCuca);
+              App.showMessage.error($("#error-display-section"), novaCuca.responseJSON.message);
             });
         },
         pesquisar: function(searchTerm) {
@@ -34,20 +37,24 @@
                 App.Cucas.Controller.renderizar();
             })
         },
+
         atualizarCuca: function(status, cucaEditada) {
-            if (status) {
-                App.Cucas.Service.editar(cucaEditada).then(function(cucaEditada) {
-                  console.info(cucaEditada);
-                    App.Cucas.View.renderizarItem(cucaEditada);
-                    App.Cucas.View.bindEditarCuca(App.Cucas.Controller.atualizarCuca);
-                    App.Cucas.View.bindRemoverCuca(App.Cucas.Controller.removerCuca);
-                });
-            } else {
-                App.Cucas.View.renderizarItem(cucaEditada);
+            if(status){
+              console.info(cucaEditada);
+              var cucaEditadaPromise = App.Cucas.Service.editar(cucaEditada);
+              cucaEditadaPromise.then( function(cucaAtualizada) {
+                App.Cucas.View.renderizarItem(cucaAtualizada);
                 App.Cucas.View.bindEditarCuca(App.Cucas.Controller.atualizarCuca);
                 App.Cucas.View.bindRemoverCuca(App.Cucas.Controller.removerCuca);
-            }
+              }, function (response){
+                App.showMessage.error($("#error-display-section"), response.responseJSON.message);
+              });
+            }else{
+              App.Cucas.View.renderizarItem(cucaEditada);
+              App.Cucas.View.bindEditarCuca(App.Cucas.Controller.atualizarCuca);
+              App.Cucas.View.bindRemoverCuca(App.Cucas.Controller.removerCuca);
+            };
         }
-    };
 
+  };
 })();

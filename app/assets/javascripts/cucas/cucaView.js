@@ -8,7 +8,7 @@
             $('#cucas-list').append(rendered);
         },
         bindNovaCuca: function(novaCucaCallback) {
-            $("#nova-cuca-form").submit(function(event) {
+            $(".nova-cuca-form").submit(function(event) {
                 event.preventDefault();
                 event.stopPropagation();
 
@@ -23,7 +23,6 @@
             });
         },
         bindPesquisaCuca: function(pesquisaCallback){
-          console.info("antes do click");
           $("#cuca-search-button").click(function(){
             console.info("depois do click");
             var searchTerm = $("#cucas-search-input").val();
@@ -33,7 +32,6 @@
         },
 
         bindRemoverCuca: function(removeCallback){
-          console.info("bind funcionando");
           $('.cucas-button-remover').off();
           $('.cucas-button-remover').click(function(event) {
             console.info("click funcionando");
@@ -55,7 +53,6 @@
                 "tipo": tipo,
                 "origem": origem
               };
-              console.info(cuca);
               var rendered = Mustache.render(App.Cucas.Templates.ListItemEditTemplate, cuca);
               li.append(rendered);
 

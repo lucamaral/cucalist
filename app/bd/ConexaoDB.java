@@ -14,7 +14,7 @@ public class ConexaoDB {
 			String driverName = "com.mysql.jdbc.Driver";
 			Class.forName(driverName); //
 			String serverName = "localhost";
-			String mydatabase = "mydb";
+			String mydatabase = "MySQL";
 			String url = "jdbc:mysql://" + serverName + "/" + mydatabase;
 			String username = "root";
 			String password = "035248";

@@ -8,3 +8,40 @@ padding-top: 70px;
     margin-left: auto;
     margin-right: auto;
 }
+
+.wrapper{
+  align-self: center;
+  height: auto;
+  max-width: 1500px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ddd;
+}
+
+.cucas-search-section{
+  margin-bottom: 10px;
+}
+
+.cucas-nova-section{
+  border-radius: 5px; 
+  max-width: 350px;
+  min-width: 250px;
+  margin: 15px;
+  padding: 10px;
+  background-color: #eee;
+}
+
+.cucas-section{
+  border-radius: 5px;
+  padding: 5px;
+  margin: 15px;
+  min-width: 400px;
+  max-width: auto;
+  background-color: #eee;
+}
+
+.list-group-item{
+  padding: 5px;
+  margin: 0px;
+}
