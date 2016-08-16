@@ -50,8 +50,17 @@
         novoEventoCallback(eventoNovo);
       });
     },
-    bindCancelarEvento: function(){
-
+    bindCancelarEvento: function(callback){
+      $("#btn-cancel-new-evento").off();
+      $('#btn-cancel-new-evento').click(function(event) {
+        callback();
+      });
+    },
+    bindVoltarEvento: function(callback){
+      $("#btn-voltar-evento").off();
+      $('#btn-voltar-evento').click(function(event) {
+        callback();
+      });
     }
 
 

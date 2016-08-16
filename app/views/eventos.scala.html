@@ -12,7 +12,7 @@
     <script id="evento-list-template" type="x-tmpl-mustache">
         <section id="evento-error-display-section"></section>
 
-        <section class="eventos-search-section marginalized">
+        <section class="eventos-search-section eventos-base marginalized">
             <div class="eventos-search-bar">
                 <input type="text" id="eventos-search-input eventos-search-bar" placeholder="Procurar Eventos" class="form-control">
             </div>
@@ -20,7 +20,7 @@
             <a id="novo-evento-button" class="btn btn-success pull-right btn-new-evento">Criar novo evento</a>
         </section>
 
-        <section class="eventos-section marginalized">
+        <section class="eventos-base marginalized">
             <h1>Eventos</h1>
             <section class="eventos-list-section">
                 <ul id="eventos-list" class="list-group">
@@ -47,20 +47,22 @@
     <script id="evento-novo-template" type="x-tmpl-mustache">
       <section class="novo-evento-section marginalized">
         <h1>Novo Evento</h1>
-        <div class="col-md-6">
-            <input type="text" class="form-control marginalized" placeholder="Titulo do evento" id="titulo-evento-input">
-            <input type="text" class="form-control marginalized" placeholder="Descrição do evento" id="descricao-evento-input">
-        </div>
-        <div class="col-md-6">
-            <input type="date" class="form-control marginalized" placeholder="Prazo do evento" id="date-evento-input">
-        </div>
-        <div class="col-md-4">
-        <div class="col-md-6">
-          <button class="btn btn-success btn-block" id="btn-save-new-evento"> Salvar </button>
-        </div>
-        <div class="col-md-6">
-          <button class="btn btn-danger btn-block" id="btn-cancel-new-evento"> Cancelar </button>
-        </div>
+        <div class="row eventos-base">
+          <div class="col-md-6">
+              <input type="text" class="form-control marginalized" placeholder="Titulo do evento" id="titulo-evento-input">
+              <input type="text" class="form-control marginalized" placeholder="Descrição do evento" id="descricao-evento-input">
+          </div>
+          <div class="col-md-6">
+              <input type="date" class="form-control marginalized" placeholder="Prazo do evento" id="date-evento-input">
+          </div>
+          <div class="col-md-4 pull-right">
+            <div class="col-md-4 pull-right">
+              <button class="btn btn-danger btn-block pull-right" id="btn-cancel-new-evento"> Cancelar </button>
+            </div>
+            <div class="col-md-4 pull-right">
+              <button class="btn btn-success btn-block pull-right" id="btn-save-new-evento"> Salvar </button>
+            </div>
+          </div>
         </div>
       </section>
       <section id="evento-error-display-section"></section>
@@ -68,12 +70,23 @@
 
     <script id="evento-detalhes-template" type="x-tmpl-mustache">
         <section id="evento-error-display-section"></section>
-        <section class="evento-section marginalized">
-            <h1>{{titulo}}</h1>
+        <section class="eventos-base marginalized">
+          <div class="row">
             <div class="col-md-6">
-              <div>Descrição: {{descricao}}</p>
-              <h3>Prazo de término do evento: {{prazo}}</h3>
+              <h1 class="marginalized">{{titulo}}</h1>
+              <h5 class="marginalized">Prazo de término do evento: {{prazo}}</h5>
             </div>
+            <div class="col-md-6">
+              <div class="col-md-3">
+                <button class="btn btn-danger btn-block" id="btn-voltar-evento"> Voltar </button>
+              </div>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-md-6 ">
+              <div class="evento-description marginalized">Descrição: {{descricao}}</p>
+            </div>
+          </div>
         </section>
     </script>
 

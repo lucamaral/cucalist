@@ -26,11 +26,13 @@
           'prazo': dateString
         }
         App.Eventos.View.renderizarEventoDetalhes(evento);
+        App.Eventos.View.bindVoltarEvento(App.Eventos.Controller.renderizarEventoList);
       })
     },
     renderizarEventoNovo: function(){
       App.Eventos.View.renderizarEventoNovo();
       App.Eventos.View.bindSalvarEvento(App.Eventos.Controller.salvarEvento);
+      App.Eventos.View.bindCancelarEvento(App.Eventos.Controller.renderizarEventoList);
     },
     salvarEvento: function(novoEvento){
       var novoEventoPromise = App.Eventos.Service.novo(novoEvento);

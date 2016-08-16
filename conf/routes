@@ -6,7 +6,6 @@
 GET     /                           controllers.Application.index()
 GET	    /eventos					controllers.Application.eventos()
 GET     /cucas						controllers.Application.cucas()
-GET		/evento/:id 				controllers.Application.evento(id: Long)
 
 # APIS
 GET		 /api/cucas					         	apis.CucaAPI.list(searchTerm: String ?= null)

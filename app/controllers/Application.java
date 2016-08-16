@@ -17,8 +17,4 @@ public class Application extends Controller {
         return ok(views.html.cucas.render());
     }
 
-    public static Result evento(final long id) {
-        return ok(views.html.evento.render(id));
-    }
-
 }

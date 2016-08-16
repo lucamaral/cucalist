@@ -33,7 +33,9 @@
       </div>
     </div>
   </div>
+
   <!-- Templates -->
+
   <script id="cucas-list-item-template" type="x-tmpl-mustache">
   {{#cucas}}
   <li class="list-group-item clearfix" data-id={{id}} data-origem={{origem}} data-tipo={{tipo}}>
@@ -78,7 +80,7 @@
       </div>
   </script>
 
-  <script type="x-tmpl-mustache" id="cucas-list-item-edit-template">
+  <script id="cucas-list-item-edit-template" type="x-tmpl-mustache">
     <div class="row">
       <div class="col-md-10">
       Tipo: <input type="text" class="form-control tipo-cuca-input" value={{tipo}}>

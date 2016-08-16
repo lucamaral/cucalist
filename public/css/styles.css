@@ -20,6 +20,25 @@ padding-top: 70px;
   background-color: #ddd;
 }
 
+.list-group-item{
+  padding: 5px;
+  margin: 0px;
+}
+
+.up-bot-half-marginalized{
+  margin-top: : 5px;
+  padding-top: 5px;
+  margin-bottom: : 5px;
+  padding-bottom: : 5px;
+  border-radius: 2px;
+}
+
+.marginalized{
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
  /*cuca*/
 
 .cucas-search-section{
@@ -46,49 +65,31 @@ padding-top: 70px;
 
 /*eventos*/
 
-.up-bot-half-marginalized{
-  margin-top: : 5px;
-  padding-top: 5px;
-  margin-bottom: : 5px;
-  padding-bottom: : 5px;
-  border-radius: 2px;
-}
-
-.marginalized{
-  margin: 10px;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.novo-evento-form-section{
-  min-width: 400px;
-  max-width: auto;
-  background-color: #eee;
-}
-
 .eventos-search-section{
   max-height: 80px;
+}
+
+.evento-description{
+  display: block;
   min-width: 400px;
-  background-color: #eee;
+  background-color: #ddd;
+  border-radius: 3px;
+  padding: 5px;
 }
 
 .eventos-search-bar{
   max-width: 800px;
 }
 
-.btn-new-evento{
-  margin-top: -34px;
-}
-
-.eventos-section{
+.eventos-base{
   min-width: 400px;
-  max-width: auto;
   background-color: #eee;
 }
 
-.list-group-item{
-  padding: 5px;
-  margin: 0px;
+/*buttons*/
+
+.btn-new-evento{
+  margin-top: -34px;
 }
 
 .btn {
