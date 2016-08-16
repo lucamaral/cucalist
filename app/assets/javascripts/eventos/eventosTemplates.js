@@ -2,10 +2,12 @@
 
     App.Eventos.Templates = {
         _init: function() {
-            App.Eventos.Templates.ListItemTemplate = $('#evento-list-template').html();
-            Mustache.parse(App.Eventos.Templates.ListItemTemplate);
-            App.Eventos.Templates.ItemTemplate = $('#evento-item-template').html();
-            Mustache.parse(App.Eventos.Templates.ItemTemplate);
+            App.Eventos.Templates.EventoListTemplate = $('#evento-list-template').html();
+            Mustache.parse(App.Eventos.Templates.EventoListTemplate);
+            App.Eventos.Templates.EventoNovoTemplate = $('#evento-novo-template').html();
+            Mustache.parse(App.Eventos.Templates.EventoNovoTemplate);
+            App.Eventos.Templates.EventoDetalhesTemplate = $('#evento-detalhes-template').html();
+            Mustache.parse(App.Eventos.Templates.EventoDetalhesTemplate);
         }
     };
 

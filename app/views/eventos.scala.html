@@ -3,57 +3,86 @@
     <div id="eventos-wrapper">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-4">
-            <section id="eventos-menu-section">
-              <input type="text" id="eventos-search-input" placeholder="Procurar Eventos" class="form-control">
-              <button id="evento-search-button">Pesquisar</button>
-              <button  class="btn btn-success btn-block evento-button-new">Criar Evento</button>
-            </section>
-          </div>
-          <div class="col-md-8">
-            <header id="eventos-header-section" class="page-header">
-              <h1>Eventos</h1>
-            </header>
-            <section id="eventos-list-section">
-              <ul id="eventos-list" class="list-group"></ul>
-            </section>
+          <div class="wrapper" id="page-wrapper">
           </div>
         </div>
       </div>
     </div>
 
     <script id="evento-list-template" type="x-tmpl-mustache">
-      {{#eventos}}
-      <li class="list-group-item clearfix" data-id={{id}} data-titulo={{titulo}}>
-        <div class="row">
-          <div class="col-md-10">
-          Titulo: {{titulo}}
-          </div>
-          <div class="col-md-2">
-            <a class="btn btn-success btn-block eventos-button-more" href="/eventos/{{id}}"> Detalhes </a>
-            <button class="btn btn-danger btn-block eventos-button-remover"> Remover </button>
-          </div>
-        </div>
-      </li>
-      {{/eventos}}
+        <section id="evento-error-display-section"></section>
+
+        <section class="eventos-search-section marginalized">
+            <div class="eventos-search-bar">
+                <input type="text" id="eventos-search-input eventos-search-bar" placeholder="Procurar Eventos" class="form-control">
+            </div>
+            <button id="evento-search-button">Pesquisar</button>
+            <a id="novo-evento-button" class="btn btn-success pull-right btn-new-evento">Criar novo evento</a>
+        </section>
+
+        <section class="eventos-section marginalized">
+            <h1>Eventos</h1>
+            <section class="eventos-list-section">
+                <ul id="eventos-list" class="list-group">
+                    {{#eventos}}
+                    <li class="list-group-item clearfix" data-id={{id}} data-titulo={{titulo}}>
+                        <div class="row">
+                            <div class="col-md-8">
+                                Titulo: {{titulo}}
+                            </div>
+                            <div class="col-md-2 .up-bot-half-marginalized">
+                                <a class="btn btn-info btn-block eventos-button-more btn-evento-detalhes"> Detalhes </a>
+                            </div>
+                            <div class="col-md-2 .up-bot-half-marginalized">
+                                <button class="btn btn-danger btn-block eventos-button-remover"> Remover </button>
+                            </div>
+                        </div>
+                    </li>
+                    {{/eventos}}
+                </ul>
+            </section>
+        </section>
     </script>
 
-    <script id="evento-item-template" type="x-tmpl-mustache">
-        <div class="row">
-          <div class="col-md-10">
-          Titutlo: {{titulo}}
-          </div>
-          <div class="col-md-2">
-            <button class="btn btn-success btn-block eventos-button-more"> Detalhes </button>
-            <button class="btn btn-danger btn-block eventos-button-remover"> Remover </button>
-          </div>
+    <script id="evento-novo-template" type="x-tmpl-mustache">
+      <section class="novo-evento-section marginalized">
+        <h1>Novo Evento</h1>
+        <div class="col-md-6">
+            <input type="text" class="form-control marginalized" placeholder="Titulo do evento" id="titulo-evento-input">
+            <input type="text" class="form-control marginalized" placeholder="Descrição do evento" id="descricao-evento-input">
         </div>
+        <div class="col-md-6">
+            <input type="date" class="form-control marginalized" placeholder="Prazo do evento" id="date-evento-input">
+        </div>
+        <div class="col-md-4">
+        <div class="col-md-6">
+          <button class="btn btn-success btn-block" id="btn-save-new-evento"> Salvar </button>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-danger btn-block" id="btn-cancel-new-evento"> Cancelar </button>
+        </div>
+        </div>
+      </section>
+      <section id="evento-error-display-section"></section>
+    </script>
+
+    <script id="evento-detalhes-template" type="x-tmpl-mustache">
+        <section id="evento-error-display-section"></section>
+        <section class="evento-section marginalized">
+            <h1>{{titulo}}</h1>
+            <div class="col-md-6">
+              <div>Descrição: {{descricao}}</p>
+              <h3>Prazo de término do evento: {{prazo}}</h3>
+            </div>
+        </section>
     </script>
 
     <script>
       App.Eventos = {};
     </script>
 
+    <script src="@routes.Assets.at("page/page.js")"></script>
+    <script src="@routes.Assets.at("moment/moment.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosService.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosTemplates.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosView.js")"></script>

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.CucaException;
 import models.Cuca;
 import models.Evento;
 import validators.CucaValidator;
@@ -17,24 +16,20 @@ public class CucaDAO {
     CucaValidator validator = new CucaValidator();
 
     public boolean inserirCuca(final Connection con, final Cuca cuca) throws SQLException {
-        try {
-            validator.validate(cuca);
-            final PreparedStatement stm = con.prepareStatement("INSERT INTO cuca(tipo, origem)" + "VALUES(?, ?);");
-            stm.setString(1, cuca.getTipo());
-            stm.setString(2, cuca.getOrigem());
-            stm.executeUpdate();
+        validator.validate(cuca);
+        final PreparedStatement stm = con.prepareStatement("INSERT INTO cuca(tipo, origem)" + "VALUES(?, ?);");
+        stm.setString(1, cuca.getTipo());
+        stm.setString(2, cuca.getOrigem());
+        stm.executeUpdate();
 
-            final PreparedStatement stm2 = con.prepareStatement("SELECT id_cuca FROM cuca WHERE tipo = ? AND origem = ?;");
-            stm2.setString(1, cuca.getTipo());
-            stm2.setString(2, cuca.getOrigem());
-            final ResultSet rs2 = stm2.executeQuery();
-            if (rs2.next()) {
-                cuca.setID(rs2.getLong("id_cuca"));
-            }
-            return true;
-        } catch (final CucaException e) {
-            throw e;
+        final PreparedStatement stm2 = con.prepareStatement("SELECT id_cuca FROM cuca WHERE tipo = ? AND origem = ?;");
+        stm2.setString(1, cuca.getTipo());
+        stm2.setString(2, cuca.getOrigem());
+        final ResultSet rs2 = stm2.executeQuery();
+        if (rs2.next()) {
+            cuca.setID(rs2.getLong("id_cuca"));
         }
+        return true;
     }
 
     public List<Cuca> consultaCucaSearchTerm(final Connection con, final String searchTerm) throws SQLException {
@@ -103,17 +98,13 @@ public class CucaDAO {
     }
 
     public boolean atualizarCuca(final Connection con, final Cuca cuca) throws SQLException {
-        try {
-            validator.validate(cuca);
-            final String sql = "Update cuca SET tipo = ?, origem = ? WHERE id_cuca = ?;";
-            final PreparedStatement stm = con.prepareStatement(sql);
-            stm.setString(1, cuca.getTipo());
-            stm.setString(2, cuca.getOrigem());
-            stm.setLong(3, cuca.getID());
-            return stm.executeUpdate() > 0;
-        } catch (final CucaException e) {
-            throw e;
-        }
+        validator.validate(cuca);
+        final String sql = "Update cuca SET tipo = ?, origem = ? WHERE id_cuca = ?;";
+        final PreparedStatement stm = con.prepareStatement(sql);
+        stm.setString(1, cuca.getTipo());
+        stm.setString(2, cuca.getOrigem());
+        stm.setLong(3, cuca.getID());
+        return stm.executeUpdate() > 0;
     }
 
     public List<Cuca> getCucaEvento(final Connection con, final Evento evento) throws SQLException {

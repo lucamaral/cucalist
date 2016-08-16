@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index()
 GET	    /eventos					controllers.Application.eventos()
 GET     /cucas						controllers.Application.cucas()
-GET		/eventos/:id 				controllers.Application.evento(id: Long)
+GET		/evento/:id 				controllers.Application.evento(id: Long)
 
 # APIS
 GET		 /api/cucas					         	apis.CucaAPI.list(searchTerm: String ?= null)
@@ -15,6 +15,8 @@ DELETE	 /api/cucas/:id							apis.CucaAPI.remover(id: Long)
 PUT		 /api/cucas								apis.CucaAPI.atualizar()
 GET		 /api/eventos							apis.EventoAPI.list(searchTerm: String ?= null)
 GET		 /api/eventos/:id						apis.EventoAPI.getEvento(id: Long)
+POST	 /api/eventos						    apis.EventoAPI.save()
+DELETE	 /api/eventos/:id						apis.EventoAPI.remove(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

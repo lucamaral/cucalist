@@ -12,6 +12,7 @@ padding-top: 70px;
 .wrapper{
   align-self: center;
   height: auto;
+  padding: 10px;
   max-width: 1500px;
   margin-top: 50px;
   margin-left: auto;
@@ -19,12 +20,14 @@ padding-top: 70px;
   background-color: #ddd;
 }
 
+ /*cuca*/
+
 .cucas-search-section{
   margin-bottom: 10px;
 }
 
 .cucas-nova-section{
-  border-radius: 5px; 
+  border-radius: 5px;
   max-width: 350px;
   min-width: 250px;
   margin: 15px;
@@ -41,7 +44,53 @@ padding-top: 70px;
   background-color: #eee;
 }
 
+/*eventos*/
+
+.up-bot-half-marginalized{
+  margin-top: : 5px;
+  padding-top: 5px;
+  margin-bottom: : 5px;
+  padding-bottom: : 5px;
+  border-radius: 2px;
+}
+
+.marginalized{
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.novo-evento-form-section{
+  min-width: 400px;
+  max-width: auto;
+  background-color: #eee;
+}
+
+.eventos-search-section{
+  max-height: 80px;
+  min-width: 400px;
+  background-color: #eee;
+}
+
+.eventos-search-bar{
+  max-width: 800px;
+}
+
+.btn-new-evento{
+  margin-top: -34px;
+}
+
+.eventos-section{
+  min-width: 400px;
+  max-width: auto;
+  background-color: #eee;
+}
+
 .list-group-item{
   padding: 5px;
   margin: 0px;
+}
+
+.btn {
+  max-width: 150px;
 }

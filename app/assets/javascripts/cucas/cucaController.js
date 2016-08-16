@@ -23,12 +23,10 @@
             novaCucaPromise.then( function(novaCuca) {
               App.Cucas.Controller.renderizar();
             }, function(novaCuca) {
-              console.info(novaCuca);
               App.showMessage.error($("#error-display-section"), novaCuca.responseJSON.message);
             });
         },
         pesquisar: function(searchTerm) {
-            console.info(searchTerm);
             App.Cucas.Controller.renderizar(searchTerm);
         },
         removerCuca: function(id) {
@@ -40,7 +38,6 @@
 
         atualizarCuca: function(status, cucaEditada) {
             if(status){
-              console.info(cucaEditada);
               var cucaEditadaPromise = App.Cucas.Service.editar(cucaEditada);
               cucaEditadaPromise.then( function(cucaAtualizada) {
                 App.Cucas.View.renderizarItem(cucaAtualizada);

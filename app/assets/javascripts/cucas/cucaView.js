@@ -34,7 +34,6 @@
         bindRemoverCuca: function(removeCallback){
           $('.cucas-button-remover').off();
           $('.cucas-button-remover').click(function(event) {
-            console.info("click funcionando");
               var id = $(event.target).closest('li').data("id");
               removeCallback(id);
           });
