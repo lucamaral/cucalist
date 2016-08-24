@@ -20,10 +20,9 @@ public class EventoAPI extends Controller {
     private static EventoDAO eventoDAO = new EventoDAO();
 
     public static Result list(final String searchTerm) throws Exception {
-        System.out.println("cheguei no list da api");
         if (searchTerm != null) {
             List<Evento> eventosFiltrados = new ArrayList<>();
-            eventosFiltrados = eventoDAO.consultaEventoSearchTerm(con, searchTerm);
+            eventosFiltrados = eventoDAO.getEventoSearchTerm(con, searchTerm);
             return ok(Json.toJson(eventosFiltrados));
         } else {
             List<Evento> allEventos = new ArrayList<>();
@@ -33,20 +32,30 @@ public class EventoAPI extends Controller {
     }
 
     public static Result getEvento(final long id) throws Exception {
-        final Evento evento = eventoDAO.consultaEventoID(con, (int) id);
+        final Evento evento = eventoDAO.getEventoID(con, (int) id);
         return ok(Json.toJson(evento));
     }
 
     public static Result remove(final long id) throws Exception {
-        final Evento eventoARemover = eventoDAO.consultaEventoID(con, (int) id);
-        eventoDAO.removerEvento(con, eventoARemover);
+        final Evento eventoARemover = eventoDAO.getEventoID(con, (int) id);
+        eventoDAO.deleteEvento(con, eventoARemover);
         return ok(Json.toJson(true));
     }
 
     public static Result save() throws Exception {
         final Evento evento = new ObjectMapper().readValue(request().body().asJson().traverse(), Evento.class);
         try {
-            eventoDAO.inserirEvento(con, evento);
+            eventoDAO.addEvento(con, evento);
+            return ok(Json.toJson(true));
+        } catch (final CucaException e) {
+            return internalServerError(Json.toJson(e));
+        }
+    }
+
+    public static Result update() throws Exception {
+        final Evento evento = new ObjectMapper().readValue(request().body().asJson().traverse(), Evento.class);
+        try {
+            eventoDAO.updateEvento(con, evento);
             return ok(Json.toJson(true));
         } catch (final CucaException e) {
             return internalServerError(Json.toJson(e));

@@ -7,7 +7,7 @@
       var eventosPromise = App.Eventos.Service.list(searchTerm);
       eventosPromise.then(function(eventos){
         var eventosInput = {
-          "eventos": eventos
+          'eventos': eventos
         };
         App.Eventos.View.renderizarEventoList(eventosInput);
         App.Eventos.View.bindRemoverEvento(App.Eventos.Controller.removerEvento);
@@ -18,21 +18,61 @@
     renderizarEventoDetalhes: function(id){
       var eventoPromise = App.Eventos.Service.getEvento(id);
       eventoPromise.then(function(){
-        var date = new Date(eventoPromise.responseJSON.prazo);
-        var dateString = moment(date).format('DD MM YYYY');
-        var evento = {
-          'descricao': eventoPromise.responseJSON.descricao ,
-          'titulo': eventoPromise.responseJSON.titulo ,
-          'prazo': dateString
-        }
-        App.Eventos.View.renderizarEventoDetalhes(evento);
-        App.Eventos.View.bindVoltarEvento(App.Eventos.Controller.renderizarEventoList);
+        var participantesPromise = App.Eventos.Service.getParticipantes(id);
+        participantesPromise.then(function(pessoas){
+          var date = new Date(eventoPromise.responseJSON.prazo);
+          var dateString = moment(date).format('DD MM YYYY');
+          var evento = {
+            'descricao': eventoPromise.responseJSON.descricao ,
+            'titulo': eventoPromise.responseJSON.titulo ,
+            'prazo': dateString,
+            'pessoas': participantesPromise.responseJSON,
+            'id': id
+          }
+          App.Eventos.View.renderizarEventoDetalhes(evento);
+          App.Eventos.View.bindEditarEvento(App.Eventos.Controller.renderizarEventoEdit)
+          App.Eventos.View.bindVoltarEvento(App.Eventos.Controller.renderizarEventoList);
+        })
       })
     },
+    renderizarEventoEdit: function(id){
+      var eventoPromise = App.Eventos.Service.getEvento(id);
+      eventoPromise.then(function(){
+        var participantesPromise = App.Eventos.Service.getParticipantes(id);
+        participantesPromise.then(function(){
+          var pessoasPromise = App.Eventos.Service.getPessoas();
+          pessoasPromise.then(function(){
+            var date = new Date(eventoPromise.responseJSON.prazo);
+            var dateString = moment(date).format('YYYY-MM-DD');
+            var evento = {
+              'descricao': eventoPromise.responseJSON.descricao ,
+              'titulo': eventoPromise.responseJSON.titulo ,
+              'prazo': dateString,
+              'pessoas': participantesPromise.responseJSON,
+              'id': id
+            }
+            App.Eventos.View.renderizarEventoEdit(evento, pessoasPromise.responseJSON);
+            App.Eventos.View.bindCancelarEventoEdit(App.Eventos.Controller.renderizarEventoDetalhes);
+            App.Eventos.View.bindSalvarEvento(App.Eventos.Controller.updateEvento);
+          });
+        });
+      });
+    },
     renderizarEventoNovo: function(){
-      App.Eventos.View.renderizarEventoNovo();
-      App.Eventos.View.bindSalvarEvento(App.Eventos.Controller.salvarEvento);
-      App.Eventos.View.bindCancelarEvento(App.Eventos.Controller.renderizarEventoList);
+      var pessoasPromise = App.Eventos.Service.getPessoas();
+      pessoasPromise.then(function(){
+        App.Eventos.View.renderizarEventoNovo(pessoasPromise.responseJSON);
+        App.Eventos.View.bindSalvarEvento(App.Eventos.Controller.salvarEvento);
+        App.Eventos.View.bindCancelarEvento(App.Eventos.Controller.renderizarEventoList);
+      });
+    },
+    updateEvento: function(evento){
+      var novoEventoPromise = App.Eventos.Service.update(evento);
+      novoEventoPromise.then( function() {
+        App.Eventos.Controller.renderizarEventoDetalhes(evento.id);
+      }, function(novoEventoPromise) {
+        App.showMessage.error($('#evento-error-display-section'), novoEventoPromise.responseJSON.message);
+      });
     },
     salvarEvento: function(novoEvento){
       var novoEventoPromise = App.Eventos.Service.novo(novoEvento);

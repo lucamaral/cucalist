@@ -3,90 +3,78 @@ package models;
 import java.util.Date;
 import java.util.List;
 
-
 public class Evento {
 
-	private int id;
-	private String descricao;
-	private String titulo;
-	private Date prazo;
-	private int empresaID;
-	private List<Cuca> opcoes;
-	private List<Pessoa> participantes;
+    private int id;
+    private String descricao;
+    private String titulo;
+    private Date prazo;
+    private List<Integer> participantes;
 
-	public Evento(int id, String titulo, String descricao, Date prazo, int empresaID){
-		this.id = id;
-		this.descricao = descricao;
-		this.titulo = titulo;
-		this.prazo = prazo;
-		this.empresaID = empresaID;
-	}
+    public Evento(final int id, final String titulo, final String descricao, final Date prazo, final List<Integer> participantes) {
+        this(titulo, descricao, prazo, participantes);
+        this.id = id;
+    }
 
-	public Evento(String titulo, String descricao, Date prazo, int empresaID){
-		this.descricao = descricao;
-		this.titulo = titulo;
-		this.prazo = prazo;
-		this.empresaID = empresaID;
-	}
+    public Evento(final String titulo, final String descricao, final Date prazo, final List<Integer> participantes) {
+        this(titulo, descricao, prazo);
+        this.participantes = participantes;
+    }
 
-	public Evento(){
-		super();
-	}
-	
-	public String getTitulo(){
-		return this.titulo;
-	}
+    public Evento(final int id, final String titulo, final String descricao, final Date prazo) {
+        this(titulo, descricao, prazo);
+        this.id = id;
+    }
 
-	public String getDescricao(){
-		return this.descricao;
-	}
+    public Evento(final String titulo, final String descricao, final Date prazo) {
+        this.descricao = descricao;
+        this.titulo = titulo;
+        this.prazo = prazo;
+        this.id = 0;
+    }
 
-	public int getID(){
-		return this.id;
-	}
+    public Evento() {
+        super();
+    }
 
-	public int getIDEmpresa(){
-		return this.empresaID;
-	}
+    public String getTitulo() {
+        return this.titulo;
+    }
 
-	public Date getPrazo(){
-		return this.prazo;
-	}
+    public String getDescricao() {
+        return this.descricao;
+    }
 
-	public List getOpcoes(){
-		return this.opcoes;
-	}
+    public int getID() {
+        return this.id;
+    }
 
-	public List getParticipantes(){
-		return this.participantes;
-	}
+    public Date getPrazo() {
+        return this.prazo;
+    }
 
-	public void setID(int id){
-		this.id = id;
-	}
+    public List<Integer> getParticipantes() {
+        return this.participantes;
+    }
 
-	public void setTitulo(String titulo){
-		this.titulo = titulo;
-	}
+    public void setID(final int id) {
+        this.id = id;
+    }
 
-	public void setDescricao(String descricao){
-		this.descricao = descricao;
-	}
+    public void setTitulo(final String titulo) {
+        this.titulo = titulo;
+    }
 
-	public void setPrazo(Date prazo){
-		this.prazo = prazo;
-	}
+    public void setDescricao(final String descricao) {
+        this.descricao = descricao;
+    }
 
-	public void setIDEmpresa(int idempresa){
-		this.empresaID = idempresa;
-	}
+    public void setPrazo(final Date prazo) {
+        this.prazo = prazo;
+    }
 
-	public void setOpcoes(List opcoesCuca){
-		this.opcoes = opcoesCuca;
-	}
-
-	public void setParticipantes(List participantesPessoa){
-		this.participantes = participantesPessoa;
-	}
+    public void setParticipantes(final List<Integer> participantesPessoa) {
+        this.participantes = participantesPessoa;
+    }
 
 }

@@ -5,10 +5,29 @@
       var rendered = Mustache.render(App.Eventos.Templates.EventoListTemplate, eventosInput);
       $('#page-wrapper').append(rendered);
     },
-    renderizarEventoNovo: function() {
+    renderizarEventoNovo: function(pessoas) {
       $('#page-wrapper').empty();
       var rendered = Mustache.render(App.Eventos.Templates.EventoNovoTemplate);
       $('#page-wrapper').append(rendered);
+      $('#select-pessoas').selectize({
+        options: pessoas ,
+        valueField: 'id' ,
+        labelField: 'nome'
+      });
+    },
+    renderizarEventoEdit: function(evento, pessoas) {
+      $('#page-wrapper').empty();
+      var rendered = Mustache.render(App.Eventos.Templates.EventoEditarTemplate, evento);
+      $('#page-wrapper').append(rendered);
+      var idInput = _.map(evento.pessoas, function(num, key) {
+        return evento.pessoas[key].id;
+      });
+      var $select = $('#select-pessoas').selectize({
+        options: pessoas ,
+        items: idInput ,
+        valueField: 'id' ,
+        labelField: 'nome'
+      });
     },
     renderizarEventoDetalhes: function(evento) {
       $('#page-wrapper').empty();
@@ -25,7 +44,6 @@
     bindRenderEventoNovo: function(callback) {
       $("#novo-evento-button").off();
       $("#novo-evento-button").click(function(event) {
-        console.info('novo evento click');
         callback();
       });
     },
@@ -39,13 +57,17 @@
     bindSalvarEvento: function(novoEventoCallback){
       $("#btn-save-new-evento").off();
       $('#btn-save-new-evento').click(function(event) {
+        var id = $('.eventos-base').data('id');
         var titulo = $('#titulo-evento-input').val();
         var descricao = $('#descricao-evento-input').val();
         var date = $('#date-evento-input').val();
+        var participantes = $('#select-pessoas').val();
         var eventoNovo = {
+          'id': id,
           'titulo': titulo,
           'descricao': descricao,
-          'prazo': date
+          'prazo': date,
+          'participantes': participantes
         }
         novoEventoCallback(eventoNovo);
       });
@@ -56,10 +78,24 @@
         callback();
       });
     },
+    bindCancelarEventoEdit: function(callback){
+      $("#btn-cancel-new-evento").off();
+      $('#btn-cancel-new-evento').click(function(event) {
+        var id = $('.eventos-base').data('id');
+        callback(id);
+      });
+    },
     bindVoltarEvento: function(callback){
       $("#btn-voltar-evento").off();
       $('#btn-voltar-evento').click(function(event) {
         callback();
+      });
+    },
+    bindEditarEvento: function(callback){
+      $("#btn-editar-evento").off();
+      $('#btn-editar-evento').click(function(event) {
+        var id = $('.eventos-base').data('id');
+        callback(id);
       });
     }
 

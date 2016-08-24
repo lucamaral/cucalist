@@ -46,7 +46,7 @@
 
     <script id="evento-novo-template" type="x-tmpl-mustache">
       <section class="novo-evento-section marginalized">
-        <h1>Novo Evento</h1>
+        <h1 class="">Novo Evento</h1>
         <div class="row eventos-base">
           <div class="col-md-6">
               <input type="text" class="form-control marginalized" placeholder="Titulo do evento" id="titulo-evento-input">
@@ -54,6 +54,38 @@
           </div>
           <div class="col-md-6">
               <input type="date" class="form-control marginalized" placeholder="Prazo do evento" id="date-evento-input">
+          </div>
+          <div class="col-md-6">
+            <select id="select-pessoas" multiple placeholder="Selecione os participantes do evento.">
+            </select>
+          </div>
+          <div class="col-md-4 pull-right">
+            <div class="col-md-4 pull-right">
+              <button class="btn btn-danger btn-block pull-right" id="btn-cancel-new-evento"> Cancelar </button>
+            </div>
+            <div class="col-md-4 pull-right">
+              <button class="btn btn-success btn-block pull-right" id="btn-save-new-evento"> Salvar </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="evento-error-display-section"></section>
+    </script>
+
+    <script id="evento-edit-template" type="x-tmpl-mustache">
+      <section class="novo-evento-section marginalized">
+        <h1 class="">Novo Evento</h1>
+        <div class="row eventos-base" data-id={{id}}>
+          <div class="col-md-6">
+              <input type="text" class="form-control marginalized" id="titulo-evento-input" value={{titulo}}>
+              <textarea class="marginalized eventos-edit-textarea textinput" id="descricao-evento-input" value={{descricao}}>{{descricao}}</textarea>
+          </div>
+          <div class="col-md-6">
+              <input type="date" class="form-control marginalized" placeholder="Prazo do evento" id="date-evento-input" value={{prazo}}>
+          </div>
+          <div class="col-md-6">
+            <select id="select-pessoas" multiple placeholder="Selecione os participantes do evento.">
+            </select>
           </div>
           <div class="col-md-4 pull-right">
             <div class="col-md-4 pull-right">
@@ -70,21 +102,34 @@
 
     <script id="evento-detalhes-template" type="x-tmpl-mustache">
         <section id="evento-error-display-section"></section>
-        <section class="eventos-base marginalized">
+        <section class="eventos-base marginalized" data-id={{id}}>
           <div class="row">
             <div class="col-md-6">
               <h1 class="marginalized">{{titulo}}</h1>
               <h5 class="marginalized">Prazo de término do evento: {{prazo}}</h5>
+              <div class="evento-description marginalized">Descrição: {{descricao}}</div>
             </div>
             <div class="col-md-6">
               <div class="col-md-3">
                 <button class="btn btn-danger btn-block" id="btn-voltar-evento"> Voltar </button>
+                <button class="btn btn-success btn-block" id="btn-editar-evento"> Editar </button>
               </div>
             </div>
-          </div>
-          <div class="row ">
-            <div class="col-md-6 ">
-              <div class="evento-description marginalized">Descrição: {{descricao}}</p>
+            <div class="col-md-6">
+              <h3>Participantes do Evento</h3>
+              <section>
+                <ul class="list-group" id>
+                  {{#pessoas}}
+                    <li class="list-group-item clearfix" data-nome={{nome}}>
+                        <div class="row">
+                            <div class="col-md-8">
+                                {{nome}}. Email: {{email}}
+                            </div>
+                        </div>
+                    </li>
+                  {{/pessoas}}
+                </ul>
+              </section>
             </div>
           </div>
         </section>
@@ -96,6 +141,7 @@
 
     <script src="@routes.Assets.at("page/page.js")"></script>
     <script src="@routes.Assets.at("moment/moment.js")"></script>
+    <script src="@routes.Assets.at("underscore/underscore.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosService.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosTemplates.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosView.js")"></script>

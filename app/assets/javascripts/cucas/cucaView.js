@@ -24,9 +24,7 @@
         },
         bindPesquisaCuca: function(pesquisaCallback){
           $("#cuca-search-button").click(function(){
-            console.info("depois do click");
             var searchTerm = $("#cucas-search-input").val();
-
             pesquisaCallback(searchTerm);
           })
         },

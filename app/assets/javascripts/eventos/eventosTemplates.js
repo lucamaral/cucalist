@@ -8,6 +8,8 @@
             Mustache.parse(App.Eventos.Templates.EventoNovoTemplate);
             App.Eventos.Templates.EventoDetalhesTemplate = $('#evento-detalhes-template').html();
             Mustache.parse(App.Eventos.Templates.EventoDetalhesTemplate);
+            App.Eventos.Templates.EventoEditarTemplate = $('#evento-edit-template').html();
+            Mustache.parse(App.Eventos.Templates.EventoEditarTemplate);
         }
     };
 

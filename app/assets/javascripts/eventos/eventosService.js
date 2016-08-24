@@ -21,6 +21,15 @@
         data: JSON.stringify(evento)
       });
     },
+    update: function(evento) {
+      return $.ajax({
+        type: 'POST',
+        url: '/api/eventos/update',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(evento)
+      });
+    },
     remove: function(id) {
       return $.ajax({
         type: 'DELETE',
@@ -32,6 +41,18 @@
         type: 'GET',
         url: '/api/eventos/' + id
       });
+    },
+    getPessoas: function(){
+      return $.ajax({
+        type: 'GET',
+        url: '/api/pessoas'
+      })
+    },
+    getParticipantes: function(id){
+      return $.ajax({
+        type: 'GET',
+        url: '/api/participantes/' + id
+      })
     }
 
   }
