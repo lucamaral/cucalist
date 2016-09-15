@@ -59,6 +59,10 @@
             <select id="select-pessoas" multiple placeholder="Selecione os participantes do evento.">
             </select>
           </div>
+          <div class="col-md-6">
+            <select id="select-cucas" multiple placeholder="Selecione as cucas do evento.">
+            </select>
+          </div>
           <div class="col-md-4 pull-right">
             <div class="col-md-4 pull-right">
               <button class="btn btn-danger btn-block pull-right" id="btn-cancel-new-evento"> Cancelar </button>
@@ -85,6 +89,10 @@
           </div>
           <div class="col-md-6">
             <select id="select-pessoas" multiple placeholder="Selecione os participantes do evento.">
+            </select>
+          </div>
+          <div class="col-md-6">
+            <select id="select-cucas" multiple placeholder="Selecione as cucas do evento.">
             </select>
           </div>
           <div class="col-md-4 pull-right">
@@ -118,9 +126,9 @@
             <div class="col-md-6">
               <h3>Participantes do Evento</h3>
               <section>
-                <ul class="list-group" id>
+                <ul class="list-group">
                   {{#pessoas}}
-                    <li class="list-group-item clearfix" data-nome={{nome}}>
+                    <li class="list-group-item clearfix" data-id={{id}}>
                         <div class="row">
                             <div class="col-md-8">
                                 {{nome}}. Email: {{email}}
@@ -128,6 +136,20 @@
                         </div>
                     </li>
                   {{/pessoas}}
+                </ul>
+              </section>
+              <h3>Cucas do Evento</h3>
+              <section>
+                <ul class="list-group">
+                  {{#cucas}}
+                    <li class="list-group-item clearfix" data-id={{id}}>
+                        <div class="row">
+                            <div class="col-md-8">
+                                {{tipo}}. Padaria: {{origem}}
+                            </div>
+                        </div>
+                    </li>
+                  {{/cucas}}
                 </ul>
               </section>
             </div>
@@ -141,7 +163,6 @@
 
     <script src="@routes.Assets.at("page/page.js")"></script>
     <script src="@routes.Assets.at("moment/moment.js")"></script>
-    <script src="@routes.Assets.at("underscore/underscore.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosService.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosTemplates.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosView.js")"></script>

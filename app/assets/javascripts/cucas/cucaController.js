@@ -14,7 +14,7 @@
             var cucasInput = {
                 "cucas": cucas
             };
-            App.Cucas.View.renderizarItems(cucasInput);
+            App.Cucas.View.renderizarItems(cucasInput, App.Cucas.Controller.salvarRating);
             App.Cucas.View.bindEditarCuca(App.Cucas.Controller.atualizarCuca);
             App.Cucas.View.bindRemoverCuca(App.Cucas.Controller.removerCuca);
         },
@@ -35,7 +35,9 @@
                 App.Cucas.Controller.renderizar();
             })
         },
-
+        salvarRating: function(rating) {
+          App.Cucas.Service.salvarRating(rating);
+        },
         atualizarCuca: function(status, cucaEditada) {
             if(status){
               var cucaEditadaPromise = App.Cucas.Service.editar(cucaEditada);
@@ -47,7 +49,7 @@
                 App.showMessage.error($("#error-display-section"), response.responseJSON.message);
               });
             }else{
-              App.Cucas.View.renderizarItem(cucaEditada);
+              App.Cucas.View.renderizarItem(cucaEditada, App.Cucas.Controller.salvarRating);
               App.Cucas.View.bindEditarCuca(App.Cucas.Controller.atualizarCuca);
               App.Cucas.View.bindRemoverCuca(App.Cucas.Controller.removerCuca);
             };

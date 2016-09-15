@@ -3,9 +3,37 @@
         limparLista: function() {
             $('#cucas-list').empty();
         },
-        renderizarItems: function(cucasInput) {
+        renderizarItems: function(cucasInput, callback) {
             var rendered = Mustache.render(App.Cucas.Templates.ListItemTemplate, cucasInput);
             $('#cucas-list').append(rendered);
+            var el1 = document.querySelectorAll('#voto');
+            var el2 = document.querySelectorAll('#cuca-rating');
+            App.Cucas.View.makeRating(el1, callback, cucasInput, 1);
+            App.Cucas.View.makeRating(el2, function(){return true;}, cucasInput, 2);
+        },
+        makeRating: function(element, callback, input, magic) {
+          var cucas = input.cucas;
+          _.each(element, function(num, key, list){
+              var myRating = rating(num, 0, 5, function(rating) {
+                var id = $(num).closest('li').data("id");
+                var ratingObj = {
+                  'id': id ,
+                  'rating': rating
+                };
+                callback(ratingObj);
+              });
+              var id = $(num).closest('li').data("id");
+              _.each(cucas, function(cuca, i) {
+                if(cucas[i].id == id) {
+                  if(magic == 1){
+                      myRating.setRating(cucas[i].nota);
+                  }else if(magic == 2){
+                      myRating.setRating(cucas[i].notaMedia);
+                  }
+                }
+              })
+          });
+
         },
         bindNovaCuca: function(novaCucaCallback) {
             $(".nova-cuca-form").submit(function(event) {
@@ -70,13 +98,17 @@
           });
         },
 
-        renderizarItem: function(cuca){
+        renderizarItem: function(cuca, callback){
           var rendered = Mustache.render(App.Cucas.Templates.ItemTemplate, cuca);
           var li = $("[data-id=" + cuca.id +"]");
           li.data("tipo", cuca.tipo);
           li.data("origem", cuca.origem);
           li.empty();
           li.append(rendered);
+          var el1 = li.find('#voto');
+          var el2 = li.find('#cuca-rating');
+          App.Cucas.View.makeRating(el1, callback, cuca, 1);
+          App.Cucas.View.makeRating(el2, callback, cuca, 2);
         }
     };
 })();

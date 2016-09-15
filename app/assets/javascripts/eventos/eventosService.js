@@ -53,6 +53,19 @@
         type: 'GET',
         url: '/api/participantes/' + id
       })
+    },
+    getAllCucas: function(){
+      return $.ajax({
+          type: 'GET',
+          url: '/api/cucas',
+          dataType: 'json'
+      });
+    },
+    getOpcoes: function(id){
+      return $.ajax({
+        type: 'GET',
+        url: '/api/cucas/' + id
+      })
     }
 
   }

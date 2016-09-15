@@ -10,15 +10,17 @@ public class Evento {
     private String titulo;
     private Date prazo;
     private List<Integer> participantes;
+    private List<Integer> cucas;
 
-    public Evento(final int id, final String titulo, final String descricao, final Date prazo, final List<Integer> participantes) {
-        this(titulo, descricao, prazo, participantes);
+    public Evento(final int id, final String titulo, final String descricao, final Date prazo, final List<Integer> participantes, final List<Integer> cucas) {
+        this(titulo, descricao, prazo, participantes, cucas);
         this.id = id;
     }
 
-    public Evento(final String titulo, final String descricao, final Date prazo, final List<Integer> participantes) {
+    public Evento(final String titulo, final String descricao, final Date prazo, final List<Integer> participantes, final List<Integer> cucas) {
         this(titulo, descricao, prazo);
         this.participantes = participantes;
+        this.cucas = cucas;
     }
 
     public Evento(final int id, final String titulo, final String descricao, final Date prazo) {
@@ -57,6 +59,10 @@ public class Evento {
         return this.participantes;
     }
 
+    public List<Integer> getCucas() {
+        return this.cucas;
+    }
+
     public void setID(final int id) {
         this.id = id;
     }
@@ -75,6 +81,10 @@ public class Evento {
 
     public void setParticipantes(final List<Integer> participantesPessoa) {
         this.participantes = participantesPessoa;
+    }
+
+    public void setCucas(final List<Integer> cucas) {
+        this.cucas = cucas;
     }
 
 }

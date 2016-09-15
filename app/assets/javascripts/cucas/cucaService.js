@@ -12,6 +12,15 @@
                 dataType: 'json'
             });
         },
+        salvarRating: function(rating) {
+          return $.ajax({
+            type: 'POST' ,
+            url: '/api/cucas/rating' ,
+            dataType: 'json' ,
+            contentType: 'application/json' ,
+            data: JSON.stringify(rating)
+          });
+        },
         nova: function(novaCuca) {
             return $.ajax({
                 type: 'POST',

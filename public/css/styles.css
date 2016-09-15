@@ -39,6 +39,10 @@ padding-top: 70px;
   border-radius: 5px;
 }
 
+.c-rating__item{
+  background: url("public/five-stars-rating/img/stars.svg");
+}
+
  /*cuca*/
 
 .cucas-search-section{
@@ -61,6 +65,15 @@ padding-top: 70px;
   min-width: 400px;
   max-width: auto;
   background-color: #eee;
+}
+
+.cucas-rating{
+  height: 30px;
+  width: 150px;
+  list-style-type: none;
+  text-decoration: none;
+  margin: 0px;
+  padding: 0px;
 }
 
 /*eventos*/

@@ -5,7 +5,7 @@
       var rendered = Mustache.render(App.Eventos.Templates.EventoListTemplate, eventosInput);
       $('#page-wrapper').append(rendered);
     },
-    renderizarEventoNovo: function(pessoas) {
+    renderizarEventoNovo: function(pessoas, cucas) {
       $('#page-wrapper').empty();
       var rendered = Mustache.render(App.Eventos.Templates.EventoNovoTemplate);
       $('#page-wrapper').append(rendered);
@@ -14,19 +14,33 @@
         valueField: 'id' ,
         labelField: 'nome'
       });
+      $('#select-cucas').selectize({
+        options: cucas ,
+        valueField: 'id' ,
+        labelField: 'tipo'
+      });
     },
-    renderizarEventoEdit: function(evento, pessoas) {
+    renderizarEventoEdit: function(evento, pessoas, cucas) {
       $('#page-wrapper').empty();
       var rendered = Mustache.render(App.Eventos.Templates.EventoEditarTemplate, evento);
       $('#page-wrapper').append(rendered);
-      var idInput = _.map(evento.pessoas, function(num, key) {
+      var idParticipantesInput = _.map(evento.pessoas, function(num, key) {
         return evento.pessoas[key].id;
       });
       var $select = $('#select-pessoas').selectize({
         options: pessoas ,
-        items: idInput ,
+        items: idParticipantesInput ,
         valueField: 'id' ,
         labelField: 'nome'
+      });
+      var idOpcoesInput = _.map(evento.cucas, function(num, key) {
+        return evento.cucas[key].id;
+      });
+      var $select = $('#select-cucas').selectize({
+        options: cucas ,
+        items: idOpcoesInput ,
+        valueField: 'id' ,
+        labelField: 'tipo'
       });
     },
     renderizarEventoDetalhes: function(evento) {
@@ -62,7 +76,9 @@
         var descricao = $('#descricao-evento-input').val();
         var date = $('#date-evento-input').val();
         var participantes = $('#select-pessoas').val();
+        var cucas = $('#select-cucas').val();
         var eventoNovo = {
+          'cucas': cucas,
           'id': id,
           'titulo': titulo,
           'descricao': descricao,

@@ -38,14 +38,26 @@
 
   <script id="cucas-list-item-template" type="x-tmpl-mustache">
   {{#cucas}}
-  <li class="list-group-item clearfix" data-id={{id}} data-origem={{origem}} data-tipo={{tipo}}>
+  <li class="list-group-item clearfix cuca-item-inlist" data-id={{id}} data-origem={{origem}} data-tipo={{tipo}}>
     <div class="row">
       <div class="col-md-8">
-      Tipo: {{tipo}}
+        Tipo: {{tipo}}
       </div>
       <div class="col-md-8">
-      Padaria: {{origem}}
+        Padaria: {{origem}}
       </div>
+        <div class="col-md-8">
+          <div class="col-md-2">
+            <p style="height:24px;margin:0px;">Seu voto</p>
+          </div>
+          <ul class="c-rating" id="voto" data-rating={{rating}}>
+          </ul>
+          <div class="col-md-2">
+            <p>Nota média</p>
+          </div>
+          <ul class="c-rating" id="cuca-rating" data-rating={{rating}}>
+          </ul>
+        </div>
       <div class="col-md-4">
       <div class="col-md-6">
         <button class="btn btn-success btn-block cucas-button-edit"> Editar </button>
@@ -60,24 +72,34 @@
   </script>
 
   <script id="cucas-item-template" type="x-tmpl-mustache">
-      <div class="row">
-        <div class="col-md-8">
-        Tipo: {{tipo}}
+  <div class="row">
+    <div class="col-md-8">
+      Tipo: {{tipo}}
+    </div>
+    <div class="col-md-8">
+      Padaria: {{origem}}
+    </div>
+      <div class="col-md-8">
+        <div class="col-md-2">
+          <p style="height:24px;margin:0px;">Seu voto</p>
         </div>
-        <div class="col-md-8">
-        Padaria: {{origem}}
+        <ul class="c-rating" id="voto" data-rating={{rating}}>
+        </ul>
+        <div class="col-md-2">
+          <p>Nota média</p>
         </div>
-        <div class="col-md-4">
-        <div class="col-md-6">
-          <button class="btn btn-success btn-block cucas-button-edit"> Editar </button>
-        </div>
-        <div class="col-md-6">
-          <button class="btn btn-danger btn-block cucas-button-remover"> Remover </button>
-        </div>
-        </div>
+        <ul class="c-rating" id="cuca-rating" data-rating={{rating}}>
+        </ul>
       </div>
-      </div>
-      </div>
+    <div class="col-md-4">
+    <div class="col-md-6">
+      <button class="btn btn-success btn-block cucas-button-edit"> Editar </button>
+    </div>
+    <div class="col-md-6">
+      <button class="btn btn-danger btn-block cucas-button-remover"> Remover </button>
+    </div>
+    </div>
+  </div>
   </script>
 
   <script id="cucas-list-item-edit-template" type="x-tmpl-mustache">

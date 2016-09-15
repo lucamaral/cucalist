@@ -19,51 +19,58 @@
       var eventoPromise = App.Eventos.Service.getEvento(id);
       eventoPromise.then(function(){
         var participantesPromise = App.Eventos.Service.getParticipantes(id);
-        participantesPromise.then(function(pessoas){
-          var date = new Date(eventoPromise.responseJSON.prazo);
-          var dateString = moment(date).format('DD MM YYYY');
-          var evento = {
-            'descricao': eventoPromise.responseJSON.descricao ,
-            'titulo': eventoPromise.responseJSON.titulo ,
-            'prazo': dateString,
-            'pessoas': participantesPromise.responseJSON,
-            'id': id
-          }
-          App.Eventos.View.renderizarEventoDetalhes(evento);
-          App.Eventos.View.bindEditarEvento(App.Eventos.Controller.renderizarEventoEdit)
-          App.Eventos.View.bindVoltarEvento(App.Eventos.Controller.renderizarEventoList);
-        })
-      })
-    },
-    renderizarEventoEdit: function(id){
-      var eventoPromise = App.Eventos.Service.getEvento(id);
-      eventoPromise.then(function(){
-        var participantesPromise = App.Eventos.Service.getParticipantes(id);
         participantesPromise.then(function(){
-          var pessoasPromise = App.Eventos.Service.getPessoas();
-          pessoasPromise.then(function(){
+          var cucasPromise = App.Eventos.Service.getOpcoes(id);
+          cucasPromise.then(function(){
             var date = new Date(eventoPromise.responseJSON.prazo);
-            var dateString = moment(date).format('YYYY-MM-DD');
+            var dateString = moment(date).format('DD MM YYYY');
             var evento = {
               'descricao': eventoPromise.responseJSON.descricao ,
               'titulo': eventoPromise.responseJSON.titulo ,
               'prazo': dateString,
               'pessoas': participantesPromise.responseJSON,
-              'id': id
+              'id': id,
+              'cucas': cucasPromise.responseJSON
             }
-            App.Eventos.View.renderizarEventoEdit(evento, pessoasPromise.responseJSON);
-            App.Eventos.View.bindCancelarEventoEdit(App.Eventos.Controller.renderizarEventoDetalhes);
-            App.Eventos.View.bindSalvarEvento(App.Eventos.Controller.updateEvento);
-          });
-        });
-      });
+            console.info(cucasPromise.responseJSON);
+            App.Eventos.View.renderizarEventoDetalhes(evento);
+            App.Eventos.View.bindEditarEvento(App.Eventos.Controller.renderizarEventoEdit)
+            App.Eventos.View.bindVoltarEvento(App.Eventos.Controller.renderizarEventoList);
+          })
+        })
+      })
+    },
+    renderizarEventoEdit: function(id){
+      var eventoPromise = App.Eventos.Service.getEvento(id);
+      var participantesPromise = App.Eventos.Service.getParticipantes(id);
+      var pessoasPromise = App.Eventos.Service.getPessoas();
+      var cucasPromise = App.Eventos.Service.getAllCucas();
+      var opcoesPromise = App.Eventos.Service.getOpcoes(id);
+      $.when(eventoPromise, participantesPromise, pessoasPromise, cucasPromise, opcoesPromise).then(function(){
+        var date = new Date(eventoPromise.responseJSON.prazo);
+        var dateString = moment(date).format('YYYY-MM-DD');
+        var evento = {
+          'descricao': eventoPromise.responseJSON.descricao ,
+          'titulo': eventoPromise.responseJSON.titulo ,
+          'prazo': dateString,
+          'cucas': opcoesPromise.responseJSON,
+          'pessoas': participantesPromise.responseJSON,
+          'id': id
+        }
+        App.Eventos.View.renderizarEventoEdit(evento, pessoasPromise.responseJSON, cucasPromise.responseJSON);
+        App.Eventos.View.bindCancelarEventoEdit(App.Eventos.Controller.renderizarEventoDetalhes);
+        App.Eventos.View.bindSalvarEvento(App.Eventos.Controller.updateEvento);
+      })
     },
     renderizarEventoNovo: function(){
       var pessoasPromise = App.Eventos.Service.getPessoas();
       pessoasPromise.then(function(){
-        App.Eventos.View.renderizarEventoNovo(pessoasPromise.responseJSON);
-        App.Eventos.View.bindSalvarEvento(App.Eventos.Controller.salvarEvento);
-        App.Eventos.View.bindCancelarEvento(App.Eventos.Controller.renderizarEventoList);
+        var cucasPromise = App.Eventos.Service.getAllCucas();
+        cucasPromise.then(function(){
+          App.Eventos.View.renderizarEventoNovo(pessoasPromise.responseJSON, cucasPromise.responseJSON);
+          App.Eventos.View.bindSalvarEvento(App.Eventos.Controller.salvarEvento);
+          App.Eventos.View.bindCancelarEvento(App.Eventos.Controller.renderizarEventoList);
+        });
       });
     },
     updateEvento: function(evento){

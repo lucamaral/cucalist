@@ -32,6 +32,9 @@ public class EventoDAO {
         for (final Integer partID : evento.getParticipantes()) {
             addParticipante(con, partID, evento.getID());
         }
+        for (final Integer cucaID : evento.getCucas()) {
+            addCuca(con, cucaID, evento.getID());
+        }
     }
 
     public boolean deleteEvento(final Connection con, final Evento evento) throws SQLException {
@@ -50,6 +53,14 @@ public class EventoDAO {
         stm.setString(2, evento.getDescricao());
         stm.setDate(3, new java.sql.Date(evento.getPrazo().getTime()));
         stm.setInt(4, evento.getID());
+        deleteParticipantes(con, evento.getID());
+        for (final Integer partID : evento.getParticipantes()) {
+            addParticipante(con, partID, evento.getID());
+        }
+        deleteCucasEvento(con, evento.getID());
+        for (final Integer cucaID : evento.getCucas()) {
+            addCuca(con, cucaID, evento.getID());
+        }
         return stm.executeUpdate() > 0;
     }
 
@@ -57,6 +68,25 @@ public class EventoDAO {
         final PreparedStatement stm = con.prepareStatement("INSERT INTO participantes(Pessoa_id_pessoa, evento_id_evento) VALUES(?, ?);");
         stm.setInt(1, pessoa);
         stm.setInt(2, evento);
+        stm.executeUpdate();
+    }
+
+    public void deleteParticipantes(final Connection con, final int evento) throws SQLException {
+        final PreparedStatement stm = con.prepareStatement("DELETE FROM participantes WHERE evento_id_evento = ?;");
+        stm.setInt(1, evento);
+        stm.executeUpdate();
+    }
+
+    public void addCuca(final Connection con, final int cuca, final int evento) throws SQLException {
+        final PreparedStatement stm = con.prepareStatement("INSERT INTO opções(cuca_id_cuca, evento_id_evento) VALUES(?, ?);");
+        stm.setInt(1, cuca);
+        stm.setInt(2, evento);
+        stm.executeUpdate();
+    }
+
+    public void deleteCucasEvento(final Connection con, final int evento) throws SQLException {
+        final PreparedStatement stm = con.prepareStatement("DELETE FROM opções WHERE evento_id_evento = ?;");
+        stm.setInt(1, evento);
         stm.executeUpdate();
     }
 
