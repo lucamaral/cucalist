@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Cuca;
+import models.Pessoa;
 import models.Rating;
 import validators.CucaValidator;
 
@@ -32,18 +33,20 @@ public class CucaDAO {
         return true;
     }
 
-    public void getNotas(final Connection con, final Cuca cuca) throws SQLException {
-        final PreparedStatement stm = con.prepareStatement("SELECT nota FROM nota WHERE cuca_id_cuca = ?");
+    public void getNotas(final Connection con, final Cuca cuca, final int id) throws SQLException {
+        final PreparedStatement stm = con.prepareStatement("SELECT * FROM nota WHERE cuca_id_cuca = ?");
         stm.setInt(1, (int) cuca.getID());
         final ResultSet rs = stm.executeQuery();
         final List<Integer> notas = new ArrayList<>();
         while (rs.next()) {
             final int nota = rs.getInt("nota");
             notas.add(nota);
+            if (rs.getInt("pessoa_id_pessoa") == id) {
+                cuca.setNota(nota);
+            }
         }
         int total = 0;
         for (int i = 0; i < notas.size(); i++) {
-            System.out.println(notas.get(i));
             total += notas.get(i);
         }
         if (notas.size() > 0) {
@@ -51,16 +54,28 @@ public class CucaDAO {
         }
     }
 
-    public List<Cuca> consultaCucaSearchTerm(final Connection con, final String searchTerm) throws SQLException {
+    public List<Cuca> consultaCucaSearchTerm(final Connection con, final String searchTerm, final Pessoa pessoa) throws SQLException {
         final PreparedStatement stm = con.prepareStatement("SELECT * FROM cuca;");
         final List<Cuca> cucas = new ArrayList<>();
         final ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             final Cuca cuca = buildCuca(rs);
-            getNotas(con, cuca);
+            getNotas(con, cuca, pessoa.getID());
             if (searchTerm.contains(cuca.getOrigem()) || searchTerm.contains(cuca.getTipo())) {
                 cucas.add(cuca);
             }
+        }
+        return cucas;
+    }
+
+    public List<Cuca> consultaAllCucas(final Connection con, final Pessoa pessoa) throws SQLException {
+        final PreparedStatement stm = con.prepareStatement("SELECT * FROM cuca;");
+        final ResultSet rs = stm.executeQuery();
+        final List<Cuca> cucas = new ArrayList<>();
+        while (rs.next()) {
+            final Cuca cuca = buildCuca(rs);
+            getNotas(con, cuca, pessoa.getID());
+            cucas.add(cuca);
         }
         return cucas;
     }
@@ -74,18 +89,6 @@ public class CucaDAO {
             cuca = buildCuca(rs);
         }
         return cuca;
-    }
-
-    public List<Cuca> consultaAllCucas(final Connection con) throws SQLException {
-        final PreparedStatement stm = con.prepareStatement("SELECT * FROM cuca;");
-        final ResultSet rs = stm.executeQuery();
-        final List<Cuca> cucas = new ArrayList<>();
-        while (rs.next()) {
-            final Cuca cuca = buildCuca(rs);
-            getNotas(con, cuca);
-            cucas.add(cuca);
-        }
-        return cucas;
     }
 
     public List<Cuca> consultaCucaOrigem(final Connection con, final String origem) throws SQLException {
@@ -105,32 +108,36 @@ public class CucaDAO {
         stm.setString(1, tipo);
         final ResultSet rs = stm.executeQuery();
         final List<Cuca> cucas = new ArrayList<>();
-        while (rs.next()) {
+        do {
             final Cuca cuca = buildCuca(rs);
             cucas.add(cuca);
-        }
+        } while (rs.next());
         return cucas;
     }
 
-    public boolean darNota(final Connection con, final Rating rating) throws SQLException {
-        final PreparedStatement stm = con.prepareStatement("INSERT INTO nota(Pessoa_id_pessoa, cuca_id_cuca, nota) " + "VALUES(1, ?, ?);");
-        final PreparedStatement stm2 = con.prepareStatement("UPDATE nota SET nota = ? WHERE cuca_id_cuca = ?");
-        if (!hasNota(con, (int) rating.getId())) {
-            stm.setInt(1, (int) rating.getId());
-            stm.setInt(2, rating.getRating());
+    public boolean darNota(final Connection con, final Rating rating, final int id) throws SQLException {
+        final PreparedStatement stm = con.prepareStatement("INSERT INTO nota(Pessoa_id_pessoa, cuca_id_cuca, nota) " + "VALUES(?, ?, ?);");
+        final PreparedStatement stm2 = con.prepareStatement("UPDATE nota SET nota = ? WHERE cuca_id_cuca = ? AND pessoa_id_pessoa = ?;");
+        if (!hasNota(con, id, (int) rating.getId())) {
+            stm.setInt(1, id);
+            stm.setInt(2, (int) rating.getId());
+            stm.setInt(3, rating.getRating());
             return stm.executeUpdate() > 0;
         } else {
             if (rating.getRating() > 0) {
                 stm2.setInt(1, rating.getRating());
                 stm2.setInt(2, (int) rating.getId());
+                stm2.setInt(3, id);
                 return stm2.executeUpdate() > 0;
             }
+            return true;
         }
     }
 
-    public boolean hasNota(final Connection con, final int id) throws SQLException {
-        final PreparedStatement stm = con.prepareStatement("SELECT * from nota WHERE cuca_id_cuca = ?;");
-        stm.setInt(1, id);
+    public boolean hasNota(final Connection con, final int idPessoa, final int idCuca) throws SQLException {
+        final PreparedStatement stm = con.prepareStatement("SELECT * from nota WHERE cuca_id_cuca = ? AND pessoa_id_pessoa = ?;");
+        stm.setInt(1, idCuca);
+        stm.setInt(2, idPessoa);
         return stm.executeQuery().next();
     }
 
@@ -157,6 +164,7 @@ public class CucaDAO {
         final List<Cuca> cucas = new ArrayList<>();
         while (rs.next()) {
             final Cuca cuca = consultaCucaID(con, rs.getInt("cuca_id_cuca"));
+            getNotas(con, cuca, 0);
             cucas.add(cuca);
         }
         return cucas;

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import models.LoginInput;
 import models.Pessoa;
 
 public class PessoaDAO {
@@ -27,6 +28,18 @@ public class PessoaDAO {
         }
     }
 
+    public boolean authenticateLogin(final Connection con, final LoginInput input, final Pessoa pessoa) throws SQLException {
+        return pessoa.getSenha().equals(input.getPassword());
+    }
+
+    public Pessoa getPessoaEmail(final Connection con, final String email) throws SQLException {
+        final PreparedStatement stm = con.prepareStatement("SELECT * FROM pessoa WHERE email = ?");
+        stm.setString(1, email);
+        final ResultSet rs = stm.executeQuery();
+        rs.next();
+        return buildPessoa(rs);
+    }
+
     public boolean deletePessoa(final Connection con, final Pessoa pessoa) throws SQLException {
         final PreparedStatement stm = con.prepareStatement("DELETE FROM pessoa WHERE id_pessoa = ?;");
         stm.setInt(1, pessoa.getID());
@@ -34,7 +47,7 @@ public class PessoaDAO {
     }
 
     public boolean updatePessoa(final Connection con, final Pessoa pessoa) throws SQLException {
-        final String sql = "Update pessoa SET senha = MD5(?), nome = ?, email = ?, aniversario = ? WHERE id_pessoa = ?;";
+        final String sql = "Update pessoa SET senha = ?, nome = ?, email = ?, aniversario = ? WHERE id_pessoa = ?;";
         final PreparedStatement stm = con.prepareStatement(sql);
         stm.setString(1, pessoa.getSenha());
         stm.setString(2, pessoa.getNome());
@@ -45,7 +58,7 @@ public class PessoaDAO {
     }
 
     public boolean validaLogin(final Connection con, final String senha, final String email) throws SQLException {
-        final PreparedStatement stm = con.prepareStatement("SELECT * FROM pessoa WHERE email = ? AND senha = MD5(?);");
+        final PreparedStatement stm = con.prepareStatement("SELECT * FROM pessoa WHERE email = ? AND senha = ?;");
         stm.setString(1, email);
         stm.setString(2, senha);
         final ResultSet rs = stm.executeQuery();
@@ -76,6 +89,16 @@ public class PessoaDAO {
             pessoas.add(pessoa);
         }
         return pessoas;
+    }
+
+    public List<String> getAllEmails(final Connection con) throws SQLException {
+        final PreparedStatement stm = con.prepareStatement("SELECT email FROM pessoa");
+        final ResultSet rs = stm.executeQuery();
+        final List<String> emails = new ArrayList<>();
+        while (rs.next()) {
+            emails.add(rs.getString("email"));
+        }
+        return emails;
     }
 
     public Pessoa getPessoa(final Connection con, final int id) throws SQLException {

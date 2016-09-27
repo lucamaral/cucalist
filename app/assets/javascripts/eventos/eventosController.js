@@ -16,29 +16,24 @@
       });
     },
     renderizarEventoDetalhes: function(id){
-      var eventoPromise = App.Eventos.Service.getEvento(id);
-      eventoPromise.then(function(){
-        var participantesPromise = App.Eventos.Service.getParticipantes(id);
-        participantesPromise.then(function(){
-          var cucasPromise = App.Eventos.Service.getOpcoes(id);
-          cucasPromise.then(function(){
-            var date = new Date(eventoPromise.responseJSON.prazo);
-            var dateString = moment(date).format('DD MM YYYY');
-            var evento = {
-              'descricao': eventoPromise.responseJSON.descricao ,
-              'titulo': eventoPromise.responseJSON.titulo ,
-              'prazo': dateString,
-              'pessoas': participantesPromise.responseJSON,
-              'id': id,
-              'cucas': cucasPromise.responseJSON
-            }
-            console.info(cucasPromise.responseJSON);
-            App.Eventos.View.renderizarEventoDetalhes(evento);
-            App.Eventos.View.bindEditarEvento(App.Eventos.Controller.renderizarEventoEdit)
-            App.Eventos.View.bindVoltarEvento(App.Eventos.Controller.renderizarEventoList);
-          })
-        })
-      })
+    var eventoPromise = App.Eventos.Service.getEvento(id);
+    var participantesPromise = App.Eventos.Service.getParticipantes(id);
+    var cucasPromise = App.Eventos.Service.getOpcoes(id);
+    $.when(eventoPromise, participantesPromise, cucasPromise).then(function(){
+      var date = new Date(eventoPromise.responseJSON.prazo);
+      var dateString = moment(date).format('DD MM YYYY');
+      var evento = {
+        'descricao': eventoPromise.responseJSON.descricao ,
+        'titulo': eventoPromise.responseJSON.titulo ,
+        'prazo': dateString,
+        'pessoas': participantesPromise.responseJSON,
+        'id': id,
+        'cucas': cucasPromise.responseJSON
+      }
+      App.Eventos.View.renderizarEventoDetalhes(evento);
+      App.Eventos.View.bindEditarEvento(App.Eventos.Controller.renderizarEventoEdit)
+      App.Eventos.View.bindVoltarEvento(App.Eventos.Controller.renderizarEventoList);
+    })
     },
     renderizarEventoEdit: function(id){
       var eventoPromise = App.Eventos.Service.getEvento(id);

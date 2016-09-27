@@ -5,6 +5,9 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET	    /eventos					controllers.Application.eventos()
+GET		/logout						controllers.Application.logout()
+GET	    /login						controllers.Application.login()
+POST 	/login						controllers.LoginController.login()
 GET     /cucas						controllers.Application.cucas()
 
 # APIS

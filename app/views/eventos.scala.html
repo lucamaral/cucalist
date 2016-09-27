@@ -144,8 +144,10 @@
                   {{#cucas}}
                     <li class="list-group-item clearfix" data-id={{id}}>
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 {{tipo}}. Padaria: {{origem}}
+                                <ul class="c-rating" id="cuca-rating"data-rating={{rating}}>
+                                </ul>
                             </div>
                         </div>
                     </li>
@@ -168,4 +170,5 @@
     <script src="@routes.Assets.at("javascripts/eventos/eventosView.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosController.js")"></script>
     <script src="@routes.Assets.at("javascripts/eventos/eventosPrincipal.js")"></script>
+    <script src="@routes.Assets.at("javascripts/utils/makeRating.js")"></script>
 }

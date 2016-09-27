@@ -47,6 +47,9 @@
       $('#page-wrapper').empty();
       var rendered = Mustache.render(App.Eventos.Templates.EventoDetalhesTemplate, evento);
       $('#page-wrapper').append(rendered);
+      var el = document.querySelectorAll('#cuca-rating');
+      console.info(evento);
+      App.MakeRating.makeRating(el, function(){return true;}, evento, 2);
     },
     bindRenderEventoDetalhes: function(callback){
       $('.btn-evento-detalhes').off();
